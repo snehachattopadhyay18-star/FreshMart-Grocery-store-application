@@ -1,0 +1,1682 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>FreshMart - Online Grocery Store</title>
+<meta name="description" content="Your Daily Needs, Delivered Fresh! Online grocery shopping web application for fresh fruits, vegetables, dairy, pulses, and household essentials in Kolkata." />
+<meta property="og:title" content="FreshMart - Online Grocery Store" />
+<meta property="og:description" content="Your Daily Needs, Delivered Fresh! Online grocery shopping web application for fresh fruits, vegetables, dairy, pulses, and household essentials in Kolkata." />
+<meta property="og:type" content="website" />
+<meta name="twitter:card" content="summary_large_image" />
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 24 24%22 fill=%22none%22 stroke=%22%231f8a4c%22 stroke-width=%222%22 stroke-linecap=%22round%22 stroke-linejoin=%22round%22><path d=%22M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z%22/><path d=%22M3 6h18%22/><path d=%22M16 10a4 4 0 0 1-8 0%22/></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{--g:#1f8a4c;--gd:#145c33;--gs:#e6f4ea;--ac:#ff7a1a;--bg:#f5faf6;--tx:#1d2b23;--mu:#66756b;--ln:#e0eae3;--shadow:0 14px 35px rgba(20,92,51,.10);--shadow2:0 20px 45px rgba(20,92,51,.16)}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;font-family:'Poppins',system-ui,sans-serif;background:var(--bg);color:var(--tx);line-height:1.5}
+body.lock{overflow:hidden}
+button{font-family:inherit}
+:focus-visible{outline:3px solid var(--ac);outline-offset:2px}
+[hidden]{display:none!important}
+.svg-icon{display:inline-block;width:1.15em;height:1.15em;vertical-align:-0.15em;stroke-width:2;stroke:currentColor;fill:none;stroke-linecap:round;stroke-linejoin:round}
+
+/* TOP ANNOUNCEMENT & LOCALITY BAR */
+.topBar{background:#0d4223;color:#d4eedc;font-size:.82rem;padding:7px clamp(16px,4vw,40px);border-bottom:1px solid rgba(255,255,255,.1)}
+.topBarInner{max-width:1200px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}
+.locWrap{display:flex;align-items:center;gap:8px}
+.locBtn{background:rgba(255,255,255,.12);color:#fff;border:0;border-radius:999px;padding:3px 12px;cursor:pointer;font-size:.82rem;font-weight:600;display:inline-flex;align-items:center;gap:6px;transition:.2s}
+.locBtn:hover{background:rgba(255,255,255,.22)}
+.etaPill{background:rgba(255,122,26,.18);color:#ff9b4e;border:1px solid rgba(255,122,26,.35);padding:2px 10px;border-radius:999px;font-weight:700;font-size:.76rem;display:inline-flex;align-items:center;gap:4px}
+.topLinks{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.topLinks button{background:none;border:0;color:#c9ebd3;cursor:pointer;font-size:.8rem;font-weight:500;padding:2px 8px;border-radius:6px;transition:.2s;display:inline-flex;align-items:center;gap:5px}
+.topLinks button:hover{color:#fff;background:rgba(255,255,255,.1)}
+.topLinks button.adminLink{color:#ffcf87;font-weight:600}
+
+/* NAVBAR */
+.nav{position:sticky;top:0;z-index:100;background:var(--gd);color:#fff;display:flex;align-items:center;gap:16px;padding:12px clamp(16px,4vw,40px);box-shadow:0 4px 18px rgba(0,0,0,.10)}
+.logo{font-weight:800;font-size:1.25rem;white-space:nowrap;letter-spacing:-.03em;display:flex;align-items:center;gap:8px;color:#fff}
+.logo-icon{width:28px;height:28px;background:#fff;border-radius:8px;display:grid;place-items:center;color:var(--gd);font-size:16px}
+.search{flex:1;max-width:520px;margin:0 auto;position:relative}
+.search input{width:100%;padding:11px 16px 11px 42px;border:0;border-radius:999px;font:inherit;font-size:.92rem;color:var(--tx);background:#fff}
+.search .search-ico{position:absolute;left:14px;top:50%;transform:translateY(-50%);pointer-events:none;color:var(--mu);display:flex}
+.navR{display:flex;align-items:center;gap:10px}
+.greet{font-size:.88rem;color:#e1f5e8}
+.wishBtn{background:rgba(255,255,255,.12);color:#fff;border:1px solid rgba(255,255,255,.35);border-radius:999px;padding:8px 14px;cursor:pointer;display:flex;align-items:center;gap:7px;font-size:.92rem;font-weight:600;transition:.2s}
+.wishBtn:hover{background:rgba(255,255,255,.22)}
+.cartBtn{background:#fff;color:var(--gd);border:0;border-radius:999px;padding:8px 8px 8px 16px;font-weight:600;cursor:pointer;display:flex;align-items:center;gap:10px;box-shadow:0 4px 12px rgba(0,0,0,.1);transition:.2s}
+.cartBtn:hover{transform:translateY(-1px);box-shadow:0 6px 16px rgba(0,0,0,.15)}
+.wishBadge{background:var(--ac);color:#fff;border-radius:999px;min-width:21px;height:21px;display:grid;place-items:center;font-size:.72rem;font-weight:700;padding:0 5px}
+.badge{background:var(--g);color:#fff;border-radius:999px;min-width:26px;height:26px;display:grid;place-items:center;font-size:.8rem;font-weight:700;padding:0 7px}
+.badge.bump{animation:bump .35s}
+@keyframes bump{40%{transform:scale(1.4)}}
+.ghost{background:none;color:#fff;border:1.5px solid rgba(255,255,255,.5);border-radius:999px;padding:7px 16px;cursor:pointer;font-weight:500;transition:.2s}
+.ghost:hover{background:rgba(255,255,255,.15)}
+
+/* HERO */
+.hero{position:relative;color:#fff;overflow:hidden;background:#145c33;box-shadow:inset 0 -1px rgba(255,255,255,.12)}
+.track{display:flex;transition:transform .85s cubic-bezier(.65,0,.25,1)}
+.slide{flex:0 0 100%;min-width:0;display:flex;align-items:center;justify-content:space-between;gap:32px;padding:clamp(44px,7vw,84px) clamp(18px,7vw,110px) clamp(74px,9vw,98px);min-height:clamp(420px,48vw,540px);position:relative}
+.s1{background:linear-gradient(120deg,var(--gd),var(--g) 70%,#3aa862)}
+.s2{background:linear-gradient(120deg,#9e3707,#d86612 70%,#e88b2a)}
+.s3{background:linear-gradient(120deg,#0a4b51,#147976 70%,#2ca396)}
+.s4{background:linear-gradient(120deg,#143577,#2559b3 70%,#4781d8)}
+.s5{background:linear-gradient(120deg,#74163e,#ab2d61 70%,#cb5384)}
+.slide:before{content:"";position:absolute;width:430px;height:430px;border-radius:50%;right:-110px;top:-180px;background:rgba(255,255,255,.09);filter:blur(2px);pointer-events:none}
+.slide:after{content:"";position:absolute;width:260px;height:260px;border-radius:50%;left:42%;bottom:-180px;background:rgba(255,255,255,.07);pointer-events:none}
+.slide .txt{position:relative;z-index:2;max-width:640px}
+.slide .txt>*{opacity:0;transform:translateX(-48px);transition:opacity .6s,transform .6s}
+.slide.active .txt>*{opacity:1;transform:none}
+.slide .txt>:nth-child(2){transition-delay:.12s}
+.slide .txt>:nth-child(3){transition-delay:.24s}
+
+/* Hero Showcase Card (replaces cartoon emoji bubbles) */
+.hero-card{position:relative;z-index:2;width:340px;height:340px;border-radius:32px;overflow:hidden;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);backdrop-filter:blur(10px);box-shadow:0 25px 60px rgba(0,0,0,.22);flex:none;display:flex;flex-direction:column;justify-content:flex-end;padding:20px;opacity:0;transform:translateX(80px) scale(.95);transition:opacity .7s .15s,transform .8s .15s}
+.slide.active .hero-card{opacity:1;transform:none}
+.hero-card img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:0;transition:transform .5s}
+.hero-card:hover img{transform:scale(1.05)}
+.hero-card-overlay{position:absolute;inset:0;background:linear-gradient(to top,rgba(10,35,20,.88) 0%,rgba(10,35,20,.3) 50%,transparent 100%);z-index:1}
+.hero-card-content{position:relative;z-index:2;color:#fff}
+.hero-pill-badge{display:inline-flex;align-items:center;gap:6px;background:rgba(255,255,255,.2);backdrop-filter:blur(8px);border:1px solid rgba(255,255,255,.3);padding:4px 10px;border-radius:999px;font-size:.74rem;font-weight:700;margin-bottom:8px}
+.pulse-dot{width:7px;height:7px;border-radius:50%;background:#4ade80;box-shadow:0 0 0 3px rgba(74,222,128,.35)}
+
+.hnav{position:absolute;top:50%;transform:translateY(-50%);z-index:2;width:44px;height:44px;border:0;border-radius:50%;background:rgba(255,255,255,.2);color:#fff;font-size:1.7rem;line-height:1;cursor:pointer;box-shadow:0 8px 20px rgba(0,0,0,.15);transition:.2s;display:grid;place-items:center}
+.hnav:hover{background:rgba(255,255,255,.35)}
+.hnav.prev{left:14px}.hnav.next{right:14px}
+.dots{position:absolute;bottom:24px;left:50%;transform:translateX(-50%);display:flex;gap:8px;z-index:2}
+.dot{width:10px;height:10px;border:0;border-radius:999px;background:rgba(255,255,255,.5);padding:0;cursor:pointer;transition:width .3s,background .3s}
+.dot.on{width:32px;background:#fff}
+.hero h1{font-size:clamp(2.3rem,5.5vw,4.2rem);line-height:1.1;letter-spacing:-.04em;font-weight:800;margin:0 0 16px;max-width:14em;text-wrap:balance}
+.hero p{margin:0 0 24px;max-width:32em;opacity:.95;font-size:clamp(.98rem,1.5vw,1.15rem);line-height:1.7}
+.cta{display:inline-flex;align-items:center;gap:9px;background:#fff;color:var(--gd);font-weight:700;text-decoration:none;border-radius:999px;padding:13px 28px;box-shadow:0 10px 25px rgba(0,0,0,.12);transition:.25s}
+.cta:after{content:"→";font-size:1.1em}
+.cta:hover{transform:translateY(-3px);box-shadow:0 15px 30px rgba(0,0,0,.18);background:var(--gs)}
+
+/* FRESH PICKS (auto-sliding image strip) */
+.picks{max-width:1200px;margin:0 auto;padding:42px clamp(16px,4vw,40px) 0}
+.picks h2{margin:0 0 2px;font-size:1.55rem;letter-spacing:-.02em}
+.picks .sub{margin:0 0 16px;color:var(--mu);font-size:.92rem}
+.marq{overflow:hidden;padding:8px 0 14px;-webkit-mask-image:linear-gradient(90deg,transparent,#000 5%,#000 95%,transparent);mask-image:linear-gradient(90deg,transparent,#000 5%,#000 95%,transparent)}
+.mtrack{display:flex;width:max-content;animation:slide 45s linear infinite}
+.marq:hover .mtrack,.marq:focus-within .mtrack{animation-play-state:paused}
+.mset{display:flex}
+@keyframes slide{to{transform:translateX(-50%)}}
+.pick{flex:none;width:185px;margin-right:16px;background:#fff;border:1px solid var(--ln);border-radius:20px;padding:12px;box-shadow:0 5px 18px rgba(20,92,51,.05);transition:.25s}
+.pick:hover{transform:translateY(-4px);box-shadow:var(--shadow)}
+.pick .thumb{height:120px;border-radius:14px;overflow:hidden;background:var(--gs)}
+.pick .thumb img{width:100%;height:100%;object-fit:cover;transition:transform .3s}
+.pick:hover .thumb img{transform:scale(1.08)}
+.pick b{display:block;margin-top:10px;font-size:.95rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.pick small{display:block;color:var(--gd);font-weight:600;margin-top:2px}
+.pick .add{margin-top:10px;padding:7px;font-size:.88rem;border-radius:10px}
+
+/* CATEGORY CARDS (Vector SVG Badges) */
+.category-section,.offer-section{max-width:1200px;margin:0 auto;padding:46px clamp(16px,4vw,40px) 18px}
+.section-head{text-align:center;margin-bottom:26px}
+.section-head h2{margin:0;font-size:clamp(1.55rem,3vw,2.15rem);letter-spacing:-.03em}
+.section-head p{margin:7px 0 0;color:var(--mu)}
+.category-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:16px}
+.category-card{position:relative;overflow:hidden;min-height:175px;border:1px solid var(--ln);border-radius:22px;padding:22px;background:#fff;cursor:pointer;text-align:left;transition:.28s;box-shadow:0 5px 18px rgba(20,92,51,.06)}
+.category-card:hover{transform:translateY(-7px);box-shadow:var(--shadow2);border-color:rgba(31,138,76,.25)}
+.category-card .cat-badge{width:54px;height:54px;border-radius:16px;display:grid;place-items:center;margin-bottom:18px;transition:.3s}
+.category-card:hover .cat-badge{transform:scale(1.1) rotate(-3deg)}
+.category-card strong{display:block;font-size:1.05rem}
+.category-card small{display:block;color:var(--mu);margin-top:3px}
+.category-card .arrow{position:absolute;right:17px;bottom:16px;width:32px;height:32px;border-radius:50%;display:grid;place-items:center;background:var(--gs);color:var(--gd);font-weight:800}
+
+.cat-fruit .cat-badge{background:#fff1e8;color:#9b4408}
+.cat-veg .cat-badge{background:#e8f7ec;color:#176839}
+.cat-dairy .cat-badge{background:#edf4ff;color:#184c9c}
+.cat-snack .cat-badge{background:#fff8df;color:#8f6305}
+.cat-drink .cat-badge{background:#fceaf2;color:#9b1d55}
+
+/* RECIPES SECTION */
+.recipe-section{max-width:1200px;margin:0 auto;padding:46px clamp(16px,4vw,40px) 20px}
+.recipe-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:22px}
+.recipe-card{background:#fff;border:1px solid var(--ln);border-radius:24px;overflow:hidden;box-shadow:0 6px 20px rgba(20,92,51,.06);transition:transform .28s,box-shadow .28s;display:flex;flex-direction:column}
+.recipe-card:hover{transform:translateY(-6px);box-shadow:var(--shadow2)}
+.recipe-img{position:relative;height:185px;overflow:hidden}
+.recipe-img img{width:100%;height:100%;object-fit:cover;transition:transform .3s}
+.recipe-card:hover .recipe-img img{transform:scale(1.06)}
+.recipe-badge{position:absolute;top:12px;left:12px;background:rgba(20,92,51,.9);backdrop-filter:blur(6px);color:#fff;font-size:.72rem;font-weight:700;padding:4px 10px;border-radius:999px}
+.recipe-meta{position:absolute;bottom:12px;right:12px;background:rgba(0,0,0,.68);backdrop-filter:blur(6px);color:#fff;font-size:.74rem;padding:3px 10px;border-radius:999px}
+.recipe-body{padding:18px;flex:1;display:flex;flex-direction:column}
+.recipe-body h3{margin:0 0 6px;font-size:1.18rem;letter-spacing:-.02em}
+.recipe-body p{margin:0 0 14px;color:var(--mu);font-size:.86rem;line-height:1.5}
+.recipe-ings{background:var(--bg);border-radius:14px;padding:12px;margin-bottom:16px}
+.recipe-ings h4{margin:0 0 8px;font-size:.8rem;text-transform:uppercase;letter-spacing:.08em;color:var(--gd)}
+.ing-pills{display:flex;flex-wrap:wrap;gap:6px}
+.ing-pill{background:#fff;border:1px solid var(--ln);border-radius:999px;padding:3px 9px;font-size:.76rem;color:var(--tx)}
+.recipe-foot{margin-top:auto;display:flex;align-items:center;justify-content:space-between;gap:12px}
+.recipe-price{font-size:1.35rem;font-weight:800;color:var(--gd)}
+.recipe-btn{background:var(--g);color:#fff;border:0;border-radius:999px;padding:10px 18px;font-weight:600;font-size:.88rem;cursor:pointer;transition:.2s;box-shadow:0 4px 12px rgba(31,138,76,.25)}
+.recipe-btn:hover{background:var(--gd);transform:translateY(-1px)}
+
+/* OFFER BANNER */
+.offer{position:relative;overflow:hidden;border-radius:28px;padding:32px clamp(24px,5vw,54px);display:flex;align-items:center;justify-content:space-between;gap:24px;background:linear-gradient(105deg,var(--gd),var(--g));color:#fff;box-shadow:var(--shadow2)}
+.offer:before,.offer:after{content:"";position:absolute;border-radius:50%;background:rgba(255,255,255,.08);pointer-events:none}
+.offer:before{width:230px;height:230px;right:-70px;top:-120px}
+.offer:after{width:150px;height:150px;left:45%;bottom:-100px}
+.offer-copy{position:relative;z-index:1}
+.offer .eyebrow{text-transform:uppercase;letter-spacing:.14em;font-size:.72rem;font-weight:800;color:#bff0cb}
+.offer h2{margin:4px 0 7px;font-size:clamp(1.55rem,3vw,2.35rem);letter-spacing:-.035em}
+.offer p{margin:0;color:#e5f7e9}
+.offer-badge{position:relative;z-index:1;background:#fff;color:var(--gd);border-radius:20px;padding:17px 24px;text-align:center;min-width:145px;box-shadow:0 12px 25px rgba(0,0,0,.12)}
+.offer-badge b{display:block;font-size:1.8rem;line-height:1}
+.offer-badge span{font-size:.75rem;font-weight:700;text-transform:uppercase;letter-spacing:.08em}
+
+/* PRODUCTS */
+.shop{max-width:1200px;margin:0 auto;padding:36px clamp(16px,4vw,40px) 56px}
+.bar{display:flex;gap:12px;align-items:center;justify-content:space-between;flex-wrap:wrap}
+.chips{display:flex;gap:8px;overflow-x:auto;padding:6px 0;max-width:100%}
+.chip{white-space:nowrap;border:1.5px solid var(--ln);background:#fff;border-radius:999px;padding:8px 18px;font-weight:500;cursor:pointer;transition:.2s}
+.chip:hover{border-color:var(--g)}
+.chip.on{background:var(--g);border-color:var(--g);color:#fff;box-shadow:0 4px 12px rgba(31,138,76,.25)}
+.bar select{padding:9px 16px;border-radius:999px;border:1.5px solid var(--ln);background:#fff;font:inherit;font-size:.9rem;cursor:pointer}
+.count{color:var(--mu);font-size:.92rem;margin:18px 0 14px}
+#productlist{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:22px}
+
+.product{position:relative;overflow:visible;border:1px solid #e4eee7;border-radius:22px;padding:12px;background:#fff;box-shadow:0 5px 18px rgba(20,92,51,.05);transition:transform .25s,box-shadow .25s}
+.product:hover{transform:translateY(-7px);box-shadow:var(--shadow2)}
+.wishHeart{position:absolute;right:12px;top:12px;z-index:3;width:38px;height:38px;border:0;border-radius:50%;background:rgba(255,255,255,.94);box-shadow:0 5px 16px rgba(0,0,0,.12);cursor:pointer;font-size:1.2rem;display:grid;place-items:center;transition:.2s;color:var(--mu)}
+.wishHeart:hover{transform:scale(1.08)}
+.wishHeart.on{background:#fff0f0;color:#e63946}
+
+.thumb{position:relative;height:180px;border-radius:16px;overflow:hidden;background:linear-gradient(145deg,#f1f8f3,#e5f3e9)}
+.thumb img{width:100%;height:100%;object-fit:cover;transition:transform .3s;position:relative;z-index:1}
+.product:hover .thumb img{transform:scale(1.06)}
+.fb{position:absolute;inset:0;display:grid;place-items:center;color:var(--gd);z-index:1}
+.tag{position:absolute;top:10px;left:10px;z-index:2;font-size:.72rem;font-weight:600;padding:4px 11px;border-radius:999px;background:#fff;color:var(--gd);box-shadow:0 4px 12px rgba(0,0,0,.08)}
+.tag.Fruits{background:#ffe9d2;color:#8a4300}.tag.Dairy{background:#e3eeff;color:#1d4a99}.tag.Snacks{background:#fff1bf;color:#6b5200}.tag.Beverages{background:#fbe3ee;color:#9a2556}.tag.Staples{background:#e8f5e9;color:#2e7d32}.tag.Household{background:#f3e5f5;color:#6a1b9a}
+
+.info{padding:14px 6px 6px}
+.info h3{margin:0;font-size:1.06rem;font-weight:600}
+.rating{font-size:.78rem;color:#d78b00;margin:4px 0 10px}
+.rating span{color:var(--mu);margin-left:4px}
+.pr{display:flex;align-items:baseline;gap:6px;margin:2px 0 14px}
+.price{font-size:1.35rem;font-weight:700;color:var(--gd)}
+.unit{font-size:.8rem;color:var(--mu);background:#f1f6f2;border-radius:6px;padding:2px 6px}
+.add{width:100%;background:var(--gd);color:#fff;border:2px solid var(--gd);border-radius:12px;padding:10px;font-weight:600;cursor:pointer;transition:.2s}
+.add:hover{background:var(--g);border-color:var(--g);transform:translateY(-1px)}
+.step{display:flex;align-items:center;justify-content:space-between;background:var(--gs);border:1px solid #cfe4d5;border-radius:999px;padding:3px}
+.step button{width:34px;height:34px;border:0;border-radius:50%;background:var(--gd);color:#fff;font-size:1.15rem;cursor:pointer;transition:.15s}
+.step button:hover{background:var(--g)}
+.step span{font-weight:600;min-width:28px;text-align:center}
+.subPrompt{margin-top:7px;display:flex;align-items:center;justify-content:center;gap:4px;font-size:.74rem;color:var(--gd);font-weight:600;cursor:pointer;background:none;border:0;width:100%;padding:3px}
+.subPrompt:hover{text-decoration:underline}
+.empty{grid-column:1/-1;text-align:center;padding:56px 16px;color:var(--mu)}
+
+/* CART & WISHLIST DRAWERS */
+.overlay{position:fixed;inset:0;z-index:999;background:rgba(10,30,18,.5);opacity:0;visibility:hidden;transition:opacity .3s,visibility .3s}
+.overlay.open{opacity:1;visibility:visible}
+.wishlistDrawer{position:fixed;right:0;top:0;height:100vh;width:min(430px,94vw);background:#fff;z-index:1001;transform:translateX(105%);transition:transform .3s ease;box-shadow:-15px 0 40px rgba(0,0,0,.18);display:flex;flex-direction:column}
+.wishlistDrawer.open{transform:translateX(0)}
+.wishBody{padding:18px;overflow-y:auto;flex:1}
+.wishItem{display:grid;grid-template-columns:70px 1fr;gap:14px;align-items:center;padding:14px 0;border-bottom:1px solid var(--ln)}
+.wishItem img{width:70px;height:65px;object-fit:cover;background:var(--bg);border-radius:12px}
+.wishItem b{display:block;font-size:.95rem}
+.wishItem small{color:var(--gd);font-weight:600}
+.wishActions{display:flex;gap:8px;margin-top:8px}
+.wishActions button{border:0;border-radius:9px;padding:6px 12px;cursor:pointer;font:inherit;font-size:.78rem;font-weight:600}
+.wishAdd{background:var(--g);color:#fff}
+.wishRemove{background:#f4f4f4;color:#555}
+
+.drawer{position:fixed;top:0;right:0;bottom:0;z-index:1000;width:min(430px,100%);background:#fff;display:flex;flex-direction:column;transform:translateX(100%);visibility:hidden;transition:transform .3s,visibility 0s .3s;box-shadow:-15px 0 40px rgba(0,0,0,.18)}
+.drawer.open{transform:none;visibility:visible;transition:transform .3s}
+.dHead{display:flex;justify-content:space-between;align-items:center;padding:18px 20px;border-bottom:1px solid var(--ln)}
+.dHead h2{margin:0;font-size:1.25rem}
+.x{width:36px;height:36px;border:0;border-radius:50%;background:var(--gs);cursor:pointer;font-size:1rem;display:grid;place-items:center;transition:.2s}
+.x:hover{background:#d5eadb}
+.dBody{flex:1;overflow-y:auto;padding:8px 20px}
+.dFoot{padding:18px 20px;border-top:1px solid var(--ln);background:#fafdfb}
+.row{display:flex;justify-content:space-between;margin-bottom:6px;color:var(--mu)}
+.row.t{color:var(--tx);font-size:1.2rem;font-weight:700;margin-top:10px;margin-bottom:14px}
+.btn{width:100%;border:0;border-radius:999px;background:var(--g);color:#fff;padding:13px;font-size:1rem;font-weight:600;cursor:pointer;transition:.2s;box-shadow:0 4px 14px rgba(31,138,76,.25)}
+.btn:hover{background:var(--gd)}
+.ci{display:flex;gap:12px;align-items:center;padding:14px 0;border-bottom:1px solid var(--ln)}
+.ci .im{position:relative;width:64px;height:64px;border-radius:12px;overflow:hidden;background:var(--gs);flex:none}
+.ci .im img{width:100%;height:100%;object-fit:cover}
+.ci .nm{flex:1;min-width:0}
+.ci .nm b{display:block;font-size:.95rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.ci .nm small{color:var(--mu)}
+.ci .step{width:100px;margin-top:6px}
+.ci .step button{width:28px;height:28px;font-size:1rem}
+.ci .sd{text-align:right}
+.ci .sd b{color:var(--gd)}
+.rm{background:none;border:0;color:#c0392b;cursor:pointer;font-size:.8rem;margin-top:6px}
+.emptyCart{text-align:center;padding:56px 0;color:var(--mu)}
+.emptyCart-icon{width:56px;height:56px;margin:0 auto 12px;color:var(--mu)}
+
+/* MODALS */
+.modal{position:fixed;inset:0;z-index:2000;background:rgba(10,30,18,.55);display:none;align-items:center;justify-content:center;padding:16px}
+.modal.show{display:flex}
+.mBox{position:relative;background:#fff;border-radius:24px;width:100%;max-width:440px;padding:28px;box-shadow:0 20px 50px rgba(0,0,0,.25);max-height:calc(100vh - 40px);overflow-y:auto}
+.mBox.wide{max-width:740px}
+.mBox h2{margin:0 0 4px}
+.mBox .x{position:absolute;top:18px;right:18px}
+.amt{color:var(--gd);font-weight:600;margin-bottom:14px}
+.pay{display:flex;justify-content:space-between;align-items:center;width:100%;background:#fff;border:2px solid var(--ln);border-radius:14px;padding:13px 16px;margin-top:10px;font-size:1rem;cursor:pointer;text-align:left;transition:.2s}
+.pay:hover{border-color:var(--g);background:var(--gs)}
+.pay small{color:var(--mu);font-size:.82rem}
+.pay.main{border-color:var(--g);background:#f2faf4}
+.pay-icon-badge{width:36px;height:36px;border-radius:10px;background:var(--gs);display:grid;place-items:center;color:var(--gd);margin-right:12px}
+.ok{width:68px;height:68px;border-radius:50%;background:var(--g);color:#fff;font-size:30px;display:grid;place-items:center;margin:0 auto 14px}
+.done{text-align:center}
+.done .row{justify-content:space-between;margin:8px 0}
+
+/* DELIVERY ADDRESS */
+.aForm label{display:block;font-size:.82rem;font-weight:600;margin-top:12px}
+.aForm label span{color:var(--mu);font-weight:400}
+.aForm input,.aForm textarea,.aForm select{width:100%;padding:11px 13px;margin-top:4px;border:1.5px solid var(--ln);border-radius:12px;font:inherit;resize:vertical}
+.aForm input:focus,.aForm textarea:focus,.aForm select:focus{border-color:var(--g);outline:0}
+.aForm .two{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+#addrError{color:#c0392b;font-size:.88rem;min-height:22px;margin-top:8px}
+.deliv{display:flex;justify-content:space-between;gap:10px;align-items:flex-start;background:var(--gs);border-radius:12px;padding:12px 14px;margin-bottom:14px;font-size:.88rem}
+.deliv button{background:none;border:0;color:var(--g);font-weight:700;cursor:pointer;flex:none;font:inherit}
+
+/* BUDGET BASKET BUILDER */
+.budgetPresets{display:flex;gap:10px;margin:14px 0}
+.budgetPresetBtn{flex:1;background:#fff;border:2px solid var(--ln);border-radius:14px;padding:10px;font-weight:700;cursor:pointer;transition:.2s}
+.budgetPresetBtn.on{border-color:var(--g);background:var(--gs);color:var(--gd)}
+.budgetItemsList{max-height:220px;overflow-y:auto;border:1px solid var(--ln);border-radius:14px;padding:10px 14px;margin:14px 0}
+.budgetItemRow{display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid var(--ln);font-size:.9rem}
+.budgetSummary{display:flex;justify-content:space-between;padding:10px 0;font-weight:700}
+
+/* LOCALITY SELECTOR */
+.locGrid{display:grid;grid-template-columns:1fr;gap:10px;margin-top:16px}
+.locCard{border:1.5px solid var(--ln);border-radius:16px;padding:12px 16px;display:flex;align-items:center;justify-content:space-between;cursor:pointer;transition:.2s}
+.locCard:hover{border-color:var(--g);background:var(--gs)}
+.locCard.on{border-color:var(--g);background:#ebf7ee}
+
+/* ORDER TRACKER TIMELINE */
+.trackOrderHeader{background:var(--gs);border-radius:18px;padding:16px;margin:14px 0;text-align:center}
+.timeline{margin:20px 0;position:relative;padding-left:36px}
+.timeline:before{content:"";position:absolute;left:14px;top:8px;bottom:8px;width:3px;background:#dcebe0}
+.tStep{position:relative;margin-bottom:20px}
+.tDot{position:absolute;left:-36px;top:2px;width:28px;height:28px;border-radius:50%;background:#e0eae3;display:grid;place-items:center;font-size:.8rem;font-weight:700;color:var(--mu)}
+.tStep.on .tDot{background:var(--g);color:#fff;box-shadow:0 0 0 4px #c2e8cf}
+.tStep b{display:block;font-size:.95rem}
+.tStep small{color:var(--mu)}
+.riderCard{display:flex;align-items:center;gap:14px;background:#fff;border:1.5px solid var(--ln);border-radius:18px;padding:14px;margin-top:16px}
+.riderAvatar{width:48px;height:48px;border-radius:50%;background:var(--gs);display:grid;place-items:center;color:var(--gd)}
+
+/* ADMIN DASHBOARD */
+.adminStats{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin:16px 0}
+.adminStat{background:var(--bg);border:1px solid var(--ln);border-radius:16px;padding:14px;text-align:center}
+.adminStat b{display:block;font-size:1.4rem;color:var(--gd);margin-top:4px}
+.adminStat small{color:var(--mu);font-size:.78rem;font-weight:600}
+.adminTabs{display:flex;gap:8px;border-bottom:1.5px solid var(--ln);padding-bottom:12px;margin:18px 0;overflow-x:auto}
+.adminTabBtn{background:none;border:0;padding:8px 16px;border-radius:10px;font-weight:600;font-size:.88rem;color:var(--mu);cursor:pointer;white-space:nowrap;transition:.2s}
+.adminTabBtn:hover{background:var(--gs);color:var(--gd)}
+.adminTabBtn.on{background:var(--gd);color:#fff}
+.adminTabContent{display:none}
+.adminTabContent.active{display:block}
+.adminSearchRow{display:flex;gap:10px;margin-bottom:14px;align-items:center;flex-wrap:wrap}
+.adminInput{padding:8px 12px;border:1.5px solid var(--ln);border-radius:10px;font:inherit;font-size:.88rem;flex:1;min-width:180px}
+.adminBtn{background:var(--g);color:#fff;border:0;border-radius:10px;padding:9px 16px;font-weight:600;cursor:pointer;font-size:.86rem;transition:.2s}
+.adminBtn:hover{background:var(--gd)}
+.adminBtn.danger{background:#c0392b}
+.adminBtn.danger:hover{background:#962d22}
+.adminBtn.sec{background:var(--bg);color:var(--tx);border:1.5px solid var(--ln)}
+.adminTable{width:100%;border-collapse:collapse;margin-top:10px;font-size:.86rem}
+.adminTable th{text-align:left;padding:10px;background:var(--bg);border-bottom:1px solid var(--ln);color:var(--mu)}
+.adminTable td{padding:10px;border-bottom:1px solid var(--ln);vertical-align:middle}
+.adminTable select{padding:5px 9px;border-radius:8px;border:1px solid var(--ln);font:inherit;font-size:.82rem}
+.stockBadge{display:inline-block;padding:3px 9px;border-radius:999px;font-size:.74rem;font-weight:700}
+.stockBadge.in{background:#e6f4ea;color:#145c33}
+.stockBadge.out{background:#fee;color:#c0392b}
+.adminNewProdForm{background:var(--bg);border:1.5px solid var(--ln);border-radius:16px;padding:16px;margin-bottom:18px;display:none}
+.adminNewProdForm.show{display:block}
+.adminFormGrid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+
+/* TOASTS */
+#toasts{position:fixed;bottom:24px;left:50%;transform:translateX(-50%);z-index:5000;display:flex;flex-direction:column;gap:8px;align-items:center;width:max-content;max-width:92vw;pointer-events:none}
+.toast{background:var(--tx);color:#fff;padding:10px 20px;border-radius:999px;font-size:.9rem;box-shadow:0 10px 25px rgba(0,0,0,.2);animation:up .25s;pointer-events:auto}
+@keyframes up{from{opacity:0;transform:translateY(12px)}}
+
+/* REDESIGNED LUXURY AUTH MODAL */
+.authPage{position:fixed;inset:0;z-index:4000;display:none;align-items:center;justify-content:center;background:rgba(10,24,18,.82);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);padding:clamp(12px,3vw,32px);overflow-y:auto}
+.authPage.show{display:flex}
+.authCard{position:relative;width:100%;max-width:1040px;min-height:620px;background:#fff;border-radius:28px;overflow:hidden;display:flex;box-shadow:0 35px 80px -15px rgba(0,0,0,.5),0 0 0 1px rgba(255,255,255,.15);animation:authPop .35s cubic-bezier(.16,1,.3,1)}
+@keyframes authPop{from{opacity:0;transform:scale(.96) translateY(12px)}to{opacity:1;transform:scale(1) translateY(0)}}
+.authVisual{flex:1.15;position:relative;background:linear-gradient(155deg,rgba(16,63,39,.92) 0%,rgba(9,38,23,.96) 100%),url('https://images.unsplash.com/photo-1542838132-92c53300491e?auto=format&fit=crop&w=1200&q=80') center/cover no-repeat;color:#fff;padding:clamp(28px,4vw,44px);display:flex;flex-direction:column;justify-content:space-between;overflow:hidden}
+.authVisual::before{content:'';position:absolute;top:-15%;right:-15%;width:320px;height:320px;background:radial-gradient(circle,rgba(74,222,128,.22) 0%,transparent 70%);pointer-events:none}
+.authVisualTop{position:relative;z-index:2}
+.authVisualBrand{display:flex;align-items:center;justify-content:space-between;margin-bottom:24px}
+.authVisualLogo{display:flex;align-items:center;gap:10px;font-weight:800;font-size:1.25rem;letter-spacing:-.02em;color:#fff}
+.authVisualLogo svg{background:rgba(255,255,255,.15);border-radius:10px;padding:5px;width:32px;height:32px;color:#86efac}
+.authVisualPantryTag{background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.22);color:#bbf7d0;font-size:.72rem;font-weight:700;padding:4px 10px;border-radius:999px;letter-spacing:.04em;text-transform:uppercase}
+.authVisualTitle{font-size:clamp(1.75rem,2.5vw,2.25rem);line-height:1.2;font-weight:800;letter-spacing:-.025em;margin:0 0 12px;color:#fff}
+.authVisualDesc{font-size:.92rem;line-height:1.6;color:rgba(255,255,255,.85);margin:0 0 20px}
+.authLiveHubBadge{display:inline-flex;align-items:center;gap:8px;font-size:.82rem;background:rgba(0,0,0,.28);backdrop-filter:blur(8px);padding:8px 14px;border-radius:12px;border:1px solid rgba(255,255,255,.15);color:#dcfce7;margin-bottom:22px}
+.authLivePulse{width:8px;height:8px;border-radius:50%;background:#4ade80;box-shadow:0 0 0 4px rgba(74,222,128,.35);animation:pulseDot 2s infinite}
+.authVisualPerks{display:flex;flex-direction:column;gap:10px;margin-bottom:24px}
+.authVisualPerkItem{display:flex;align-items:center;gap:10px;font-size:.88rem;color:#f0fdf4}
+.authVisualPerkIcon{width:24px;height:24px;border-radius:6px;background:rgba(255,255,255,.16);display:flex;align-items:center;justify-content:center;flex-shrink:0;color:#86efac}
+.authSocialProof{position:relative;z-index:2;background:rgba(255,255,255,.12);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border:1px solid rgba(255,255,255,.22);border-radius:18px;padding:16px 18px;margin-top:auto}
+.authProofHeader{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px}
+.authProofStars{color:#fde047;font-size:.82rem;font-weight:700;letter-spacing:1px}
+.authProofStat{font-size:.72rem;color:#bbf7d0;font-weight:600}
+.authProofQuote{font-size:.86rem;line-height:1.5;color:#fff;margin:0 0 10px;font-style:italic}
+.authProofAuthor{display:flex;align-items:center;gap:10px}
+.authProofAvatar{width:30px;height:30px;border-radius:50%;background:#22c55e;color:#fff;font-weight:700;font-size:.75rem;display:flex;align-items:center;justify-content:center;border:1.5px solid rgba(255,255,255,.3)}
+.authProofMeta b{display:block;font-size:.82rem;color:#fff}
+.authProofMeta small{font-size:.72rem;color:#bbf7d0}
+.authFormPane{flex:1;padding:clamp(28px,4vw,44px);display:flex;flex-direction:column;justify-content:center;background:#fff;position:relative;overflow-y:auto}
+.authModalClose{position:absolute;top:18px;right:18px;width:36px;height:36px;border-radius:50%;background:#f1f5f9;border:1px solid #e2e8f0;display:flex;align-items:center;justify-content:center;cursor:pointer;color:#475569;transition:all .2s;z-index:10}
+.authModalClose:hover{background:#e2e8f0;color:#0f172a;transform:rotate(90deg)}
+.authTabs{display:flex;background:#f1f5f9;padding:4px;border-radius:14px;margin-bottom:18px;gap:4px;border:1px solid #e2e8f0}
+.authTabBtn{flex:1;padding:9px 14px;border:none;background:transparent;border-radius:10px;font-size:.88rem;font-weight:600;color:#64748b;cursor:pointer;transition:all .2s;text-align:center}
+.authTabBtn.active{background:#fff;color:#0f172a;box-shadow:0 2px 8px rgba(0,0,0,.08);font-weight:700}
+.authDemoBox{background:#f8fafc;border:1px solid #e2e8f0;border-radius:14px;padding:12px 14px;margin-bottom:18px}
+.authDemoHeader{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px;font-size:.74rem;font-weight:700;color:#475569;text-transform:uppercase;letter-spacing:.05em}
+.authDemoGrid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.authDemoChip{display:flex;align-items:center;gap:8px;padding:8px 10px;background:#fff;border:1.5px solid #cbd5e1;border-radius:10px;font-size:.8rem;font-weight:600;color:#1e293b;cursor:pointer;transition:all .2s;text-align:left}
+.authDemoChip:hover{border-color:#059669;background:#ecfdf5;color:#065f46;transform:translateY(-1px);box-shadow:0 3px 8px rgba(5,150,105,.12)}
+.authDemoChip small{display:block;font-size:.7rem;color:#64748b;font-weight:normal}
+.authDemoChip:hover small{color:#059669}
+.authOrDivider{display:flex;align-items:center;margin:14px 0 16px;color:#94a3b8;font-size:.74rem;font-weight:600;letter-spacing:.04em;text-transform:uppercase}
+.authOrDivider::before,.authOrDivider::after{content:'';flex:1;height:1px;background:#e2e8f0}
+.authOrDivider span{padding:0 10px}
+.authInputGroup{margin-bottom:12px}
+.authInputGroup label{display:block;font-size:.8rem;font-weight:600;color:#334155;margin-bottom:6px}
+.authInputWrapper{position:relative;display:flex;align-items:center}
+.authInputWrapper .inputIcon{position:absolute;left:14px;color:#94a3b8;display:flex;align-items:center;pointer-events:none}
+.authInputWrapper input{width:100%;padding:12px 14px 12px 42px;border:1.5px solid #cbd5e1;border-radius:12px;font-size:.92rem;font-family:inherit;color:#0f172a;background:#fff;transition:all .2s}
+.authInputWrapper input:focus{border-color:#059669;outline:none;box-shadow:0 0 0 3px rgba(5,150,105,.14)}
+.authTogglePwBtn{position:absolute;right:12px;background:transparent;border:none;cursor:pointer;color:#64748b;padding:4px;display:flex;align-items:center;border-radius:6px}
+.authTogglePwBtn:hover{color:#059669}
+.authHelpersRow{display:flex;align-items:center;justify-content:space-between;font-size:.8rem;color:#64748b;margin:10px 0 16px}
+.authRememberCheck{display:flex;align-items:center;gap:6px;cursor:pointer;user-select:none}
+.authRememberCheck input{accent-color:#059669;width:15px;height:15px;cursor:pointer}
+.authHelpLink{color:#059669;font-weight:600;text-decoration:none;cursor:pointer}
+.authHelpLink:hover{text-decoration:underline}
+#authError{color:#dc2626;font-size:.84rem;min-height:20px;margin-bottom:8px;font-weight:500;display:flex;align-items:center;gap:6px}
+.authSubmitCTA{width:100%;padding:13px 20px;border:none;border-radius:12px;background:linear-gradient(135deg,#059669,#047857);color:#fff;font-size:.98rem;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;transition:all .2s;box-shadow:0 8px 20px rgba(5,150,105,.28)}
+.authSubmitCTA:hover{background:linear-gradient(135deg,#047857,#065f46);transform:translateY(-1px);box-shadow:0 12px 25px rgba(5,150,105,.35)}
+.authSubmitCTA:active{transform:translateY(0)}
+.authTrustNote{display:flex;align-items:center;justify-content:center;gap:6px;font-size:.74rem;color:#64748b;margin-top:14px;text-align:center}
+@media(max-width:860px){.authCard{flex-direction:column;max-height:94vh;border-radius:20px}.authVisual{display:none}.authFormPane{padding:24px 18px}.authDemoGrid{grid-template-columns:1fr}}
+
+/* FOOTER */
+footer{margin-top:45px;text-align:left;padding:48px clamp(20px,6vw,80px) 24px;background:#103f27;color:#bcdac7}
+.footer-grid{max-width:1200px;margin:0 auto;display:grid;grid-template-columns:1.5fr 1fr 1fr 1fr;gap:35px;padding-bottom:35px;border-bottom:1px solid rgba(255,255,255,.13)}
+.footer-brand b{font-size:1.3rem;color:#fff}
+.footer-brand p{max-width:330px;line-height:1.8;margin:12px 0 0}
+.footer-col h4{color:#fff;margin:0 0 12px;font-size:1rem}
+.footer-col a{display:block;color:#bcdac7;text-decoration:none;margin:8px 0;font-size:.9rem;transition:.2s}
+.footer-col a:hover{color:#fff}
+.footer-bottom{max-width:1200px;margin:18px auto 0;display:flex;justify-content:space-between;gap:15px;flex-wrap:wrap;font-size:.82rem}
+.footer-badges{display:flex;gap:8px;flex-wrap:wrap}
+.footer-badges span{border:1px solid rgba(255,255,255,.14);border-radius:999px;padding:5px 14px}
+
+@media(max-width:950px){
+  .recipe-grid{grid-template-columns:repeat(2,1fr)}
+  .adminStats{grid-template-columns:repeat(2,1fr)}
+  .hero-card{display:none}
+}
+@media(max-width:850px){
+  .category-grid{grid-template-columns:repeat(3,1fr)}
+  .footer-grid{grid-template-columns:repeat(2,1fr)}
+}
+@media(max-width:760px){
+  .hnav{display:none}
+  .side{display:none}
+  .nav{flex-wrap:wrap;gap:10px}
+  .search{order:3;flex:1 1 100%;max-width:none}
+  .navR{margin-left:auto}
+  .greet{display:none}
+  .topBarInner{flex-direction:column;align-items:flex-start}
+}
+@media(max-width:650px){
+  .recipe-grid{grid-template-columns:1fr}
+  .greet{display:none}
+  .wishBtn{padding:8px 10px}
+  .wishBtn .wishText{display:none}
+  .slide{justify-content:center;text-align:center}
+  .slide .txt{max-width:100%}
+  .slide p{margin-left:auto;margin-right:auto}
+  .category-grid{grid-template-columns:repeat(2,1fr)}
+  .category-card{min-height:155px;padding:17px}
+  .offer{align-items:flex-start;flex-direction:column}
+  .offer-badge{align-self:flex-start}
+  .footer-grid{grid-template-columns:1fr 1fr;gap:25px}
+  .footer-brand{grid-column:1/-1}
+}
+@media(max-width:480px){
+  #productlist{grid-template-columns:repeat(2,1fr);gap:12px}
+  .category-grid{gap:10px}
+  .category-card{min-height:140px;border-radius:17px}
+  .category-card .cat-badge{width:44px;height:44px;margin-bottom:12px}
+  .category-card strong{font-size:.92rem}
+  .category-card small{font-size:.72rem}
+  .thumb{height:140px}
+  .logo{font-size:1.05rem}
+  .footer-grid{grid-template-columns:1fr}
+  .footer-brand{grid-column:auto}
+  .footer-bottom{display:block}
+  .footer-bottom>div{margin-top:8px}
+}
+/* USER DASHBOARD & RECEIPT */
+.userNavBtn{display:flex;align-items:center;gap:8px;background:#f1f5f9;border:1px solid #e2e8f0;padding:4px 12px 4px 6px;border-radius:999px;cursor:pointer;transition:all .2s}
+.userNavBtn:hover{background:#e2e8f0;border-color:#cbd5e1}
+.userNavAvatar{width:28px;height:28px;border-radius:50%;background:#059669;color:#fff;font-weight:700;font-size:.75rem;display:flex;align-items:center;justify-content:center}
+.userNavDetails{display:flex;flex-direction:column;text-align:left;line-height:1.15}
+.userNavDetails small{font-size:.66rem;color:#64748b;font-weight:600}
+.userNavDetails b{font-size:.82rem;color:#0f172a;max-width:120px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+
+.dashboardModal{position:fixed;inset:0;z-index:3800;display:none;align-items:center;justify-content:center;background:rgba(10,24,18,.82);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);padding:clamp(12px,3vw,32px);overflow-y:auto}
+.dashboardModal.show{display:flex}
+.dashboardCard{width:100%;max-width:960px;max-height:90vh;background:#fff;border-radius:28px;overflow:hidden;display:flex;flex-direction:column;box-shadow:0 35px 80px -15px rgba(0,0,0,.5),0 0 0 1px rgba(255,255,255,.15);animation:authPop .35s cubic-bezier(.16,1,.3,1);position:relative}
+.dashboardHero{background:linear-gradient(135deg,#103f27 0%,#064e3b 100%);color:#fff;padding:24px 28px;position:relative;overflow:hidden}
+.dashboardHero::after{content:'';position:absolute;top:-40px;right:-40px;width:220px;height:220px;background:radial-gradient(circle,rgba(74,222,128,.25) 0%,transparent 70%);pointer-events:none}
+.dashUserHeader{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;margin-bottom:20px;position:relative;z-index:2}
+.dashUserIdentity{display:flex;align-items:center;gap:14px}
+.dashAvatarBig{width:54px;height:54px;border-radius:16px;background:#059669;border:2px solid rgba(255,255,255,.3);color:#fff;font-size:1.3rem;font-weight:800;display:flex;align-items:center;justify-content:center}
+.dashUserMeta h3{margin:0;font-size:1.3rem;color:#fff}
+.dashUserMeta p{margin:2px 0 0;font-size:.85rem;color:#bbf7d0}
+.dashMemberBadge{display:inline-flex;align-items:center;gap:6px;background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.25);color:#fde047;font-size:.78rem;font-weight:700;padding:6px 14px;border-radius:999px}
+.dashStatsGrid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;position:relative;z-index:2}
+.dashStatBox{background:rgba(255,255,255,.1);backdrop-filter:blur(8px);border:1px solid rgba(255,255,255,.16);border-radius:14px;padding:10px 14px}
+.dashStatBox small{display:block;font-size:.7rem;color:#bbf7d0;text-transform:uppercase;letter-spacing:.05em;font-weight:600}
+.dashStatBox b{font-size:1.2rem;color:#fff;display:block;margin-top:2px}
+.dashTabsBar{display:flex;background:#f8fafc;border-bottom:1px solid #e2e8f0;padding:8px 24px 0;gap:8px}
+.dashTabBtn{padding:10px 18px;border:none;background:transparent;font-size:.88rem;font-weight:600;color:#64748b;cursor:pointer;border-bottom:2.5px solid transparent;transition:all .2s;display:flex;align-items:center;gap:7px}
+.dashTabBtn.active{color:#059669;border-bottom-color:#059669;font-weight:700}
+.dashBody{padding:24px 28px;overflow-y:auto;flex:1;background:#fafafa}
+.dashTabPane{display:none}
+.dashTabPane.active{display:block}
+.dashOrderCard{border:1.5px solid #e2e8f0;border-radius:18px;padding:18px 20px;margin-bottom:16px;background:#fff;transition:all .2s}
+.dashOrderCard:hover{border-color:#cbd5e1;box-shadow:0 6px 18px rgba(0,0,0,.04)}
+.dashOrderHeader{display:flex;align-items:center;justify-content:space-between;padding-bottom:12px;border-bottom:1px solid #f1f5f9;margin-bottom:14px;flex-wrap:wrap;gap:10px}
+.dashOrderNum{font-size:1rem;font-weight:700;color:#0f172a}
+.dashOrderStatus{display:inline-flex;align-items:center;gap:6px;padding:4px 10px;border-radius:999px;font-size:.76rem;font-weight:700}
+.dashOrderStatus.live{background:#ecfdf5;color:#047857;border:1px solid #a7f3d0}
+.dashOrderStatus.done{background:#f1f5f9;color:#475569;border:1px solid #cbd5e1}
+.dashOrderItemsGrid{display:flex;gap:10px;overflow-x:auto;padding-bottom:10px;margin-bottom:14px}
+.dashOrderItemMini{display:flex;align-items:center;gap:10px;background:#f8fafc;border:1px solid #e2e8f0;border-radius:12px;padding:6px 10px;flex-shrink:0}
+.dashOrderItemMini img{width:36px;height:36px;border-radius:8px;object-fit:cover;background:#eee}
+.dashOrderFooter{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;padding-top:10px;border-top:1px solid #f1f5f9}
+.dashOrderTotal b{font-size:1.15rem;color:#0f172a}
+.dashOrderActions{display:flex;gap:8px;flex-wrap:wrap}
+.dashBtn{padding:7px 14px;border-radius:9px;font-size:.82rem;font-weight:600;cursor:pointer;border:1px solid transparent;display:flex;align-items:center;gap:6px;transition:all .2s}
+.dashBtn.primary{background:#059669;color:#fff}
+.dashBtn.primary:hover{background:#047857}
+.dashBtn.secondary{background:#f1f5f9;color:#334155;border-color:#cbd5e1}
+.dashBtn.secondary:hover{background:#e2e8f0}
+.dashProfileForm{display:grid;grid-template-columns:1fr 1fr;gap:16px;background:#fff;border:1.5px solid #e2e8f0;border-radius:18px;padding:24px}
+.dashFormSpan2{grid-column:1/-1}
+
+.receiptModal{position:fixed;inset:0;z-index:4500;display:none;align-items:center;justify-content:center;background:rgba(0,0,0,.75);backdrop-filter:blur(10px);padding:20px;overflow-y:auto}
+.receiptModal.show{display:flex}
+.receiptPaper{width:100%;max-width:480px;background:#fff;border-radius:20px;padding:28px 24px;box-shadow:0 25px 60px rgba(0,0,0,.4);position:relative;animation:authPop .3s ease-out}
+.receiptHeader{text-align:center;border-bottom:2px dashed #cbd5e1;padding-bottom:16px;margin-bottom:16px}
+.receiptBrand{font-size:1.4rem;font-weight:800;color:#059669;letter-spacing:-.02em}
+.receiptTable{width:100%;border-collapse:collapse;font-size:.84rem;margin:14px 0}
+.receiptTable th{text-align:left;border-bottom:1px solid #cbd5e1;padding:6px 0;color:#64748b}
+.receiptTable td{padding:8px 0;border-bottom:1px solid #f1f5f9}
+@media(max-width:768px){.dashStatsGrid{grid-template-columns:1fr 1fr}.dashProfileForm{grid-template-columns:1fr}}
+
+/* PRODUCT DETAILS & REVIEWS MODAL */
+.productModal{position:fixed;inset:0;z-index:3900;display:none;align-items:center;justify-content:center;background:rgba(10,24,18,.82);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);padding:clamp(12px,3vw,32px);overflow-y:auto}
+.productModal.show{display:flex}
+.productModalCard{width:100%;max-width:980px;max-height:92vh;background:#fff;border-radius:28px;overflow:hidden;display:flex;flex-direction:column;box-shadow:0 35px 80px -15px rgba(0,0,0,.5),0 0 0 1px rgba(255,255,255,.15);animation:authPop .35s cubic-bezier(.16,1,.3,1);position:relative}
+.pmBody{display:grid;grid-template-columns:1.05fr 1.35fr;overflow-y:auto;flex:1;background:#fff}
+.pmLeft{padding:clamp(20px,3vw,32px);background:#fbfcfb;border-right:1px solid #eef2f0;display:flex;flex-direction:column;gap:18px}
+.pmMediaBox{position:relative;border-radius:20px;overflow:hidden;background:#fff;border:1px solid #e2e8f0;box-shadow:0 8px 24px rgba(0,0,0,.04);aspect-ratio:4/3;display:flex;align-items:center;justify-content:center}
+.pmMediaBox img{width:100%;height:100%;object-fit:cover;transition:transform .4s cubic-bezier(.2,0,0,1)}
+.pmMediaBox:hover img{transform:scale(1.04)}
+.pmCatBadge{position:absolute;top:14px;left:14px;background:rgba(16,63,39,.9);backdrop-filter:blur(6px);color:#fff;font-size:.74rem;font-weight:700;padding:4px 12px;border-radius:999px;letter-spacing:.03em;text-transform:uppercase}
+.pmFreshTag{position:absolute;bottom:14px;left:14px;background:rgba(255,255,255,.94);backdrop-filter:blur(8px);border:1px solid rgba(0,0,0,.08);color:#065f46;font-size:.76rem;font-weight:700;padding:5px 12px;border-radius:10px;display:flex;align-items:center;gap:6px;box-shadow:0 4px 12px rgba(0,0,0,.08)}
+.pmSpecsGrid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.pmSpecItem{background:#fff;border:1px solid #e2e8f0;border-radius:14px;padding:12px;display:flex;flex-direction:column;gap:3px}
+.pmSpecItem small{font-size:.7rem;color:#64748b;font-weight:600;text-transform:uppercase;letter-spacing:.04em}
+.pmSpecItem b{font-size:.86rem;color:#0f172a;line-height:1.3}
+.pmNutritionCard{background:#f0fdf4;border:1px solid #bbf7d0;border-radius:16px;padding:14px}
+.pmNutritionHeader{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px;font-size:.78rem;font-weight:700;color:#065f46;text-transform:uppercase;letter-spacing:.05em}
+.pmNutriPills{display:flex;flex-wrap:wrap;gap:6px}
+.pmNutriPill{background:#fff;border:1px solid #a7f3d0;color:#065f46;padding:4px 10px;border-radius:8px;font-size:.78rem;font-weight:600}
+.pmRight{padding:clamp(20px,3vw,32px);display:flex;flex-direction:column;gap:20px;overflow-y:auto}
+.pmHeaderTop{display:flex;align-items:flex-start;justify-content:space-between;gap:16px}
+.pmTitle{font-size:clamp(1.3rem,2.2vw,1.75rem);font-weight:800;color:#0f172a;line-height:1.25;margin:0 0 6px}
+.pmOriginRow{display:flex;align-items:center;gap:8px;font-size:.82rem;color:#64748b}
+.pmPricingRow{display:flex;align-items:baseline;gap:12px;margin-top:6px}
+.pmCurrentPrice{font-size:1.85rem;font-weight:800;color:#059669;letter-spacing:-.02em}
+.pmOriginalPrice{font-size:1.05rem;color:#94a3b8;text-decoration:line-through}
+.pmDiscountBadge{background:#ecfdf5;color:#047857;border:1px solid #a7f3d0;font-size:.78rem;font-weight:700;padding:3px 8px;border-radius:8px}
+.pmUnitText{font-size:.9rem;color:#64748b}
+.pmStockBadge{display:inline-flex;align-items:center;gap:6px;font-size:.8rem;font-weight:700;padding:4px 10px;border-radius:999px;margin-left:auto}
+.pmStockBadge.in{background:#ecfdf5;color:#047857}
+.pmStockBadge.out{background:#fef2f2;color:#b91c1c}
+.pmDesc{font-size:.92rem;line-height:1.65;color:#334155;margin:0}
+.pmActionsCard{background:#f8fafc;border:1px solid #e2e8f0;border-radius:18px;padding:16px 20px;display:flex;flex-direction:column;gap:12px}
+.pmCartRow{display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+.pmQtyControls{display:inline-flex;align-items:center;background:#fff;border:1.5px solid #cbd5e1;border-radius:12px;padding:3px}
+.pmQtyBtn{width:36px;height:36px;border:none;background:transparent;cursor:pointer;font-size:1.1rem;font-weight:700;color:#0f172a;display:flex;align-items:center;justify-content:center;border-radius:8px;transition:background .15s}
+.pmQtyBtn:hover{background:#f1f5f9}
+.pmQtyValue{min-width:36px;text-align:center;font-size:1rem;font-weight:700;color:#0f172a}
+.pmAddBtn{flex:1;min-width:160px;padding:12px 20px;background:linear-gradient(135deg,#059669,#047857);color:#fff;border:none;border-radius:12px;font-size:.95rem;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;transition:all .2s;box-shadow:0 6px 16px rgba(5,150,105,.24)}
+.pmAddBtn:hover{background:linear-gradient(135deg,#047857,#065f46);transform:translateY(-1px);box-shadow:0 8px 20px rgba(5,150,105,.32)}
+.pmWishBtn{width:46px;height:46px;border-radius:12px;border:1.5px solid #cbd5e1;background:#fff;display:flex;align-items:center;justify-content:center;cursor:pointer;color:#64748b;transition:all .2s;flex-shrink:0}
+.pmWishBtn.active{border-color:#fca5a5;background:#fef2f2;color:#dc2626}
+.pmWishBtn:hover{border-color:#94a3b8}
+.pmSubBanner{display:flex;align-items:center;justify-content:space-between;background:#ecfdf5;border:1px solid #a7f3d0;border-radius:12px;padding:10px 14px;font-size:.82rem;color:#065f46}
+.pmSubLink{background:transparent;border:none;color:#047857;font-weight:700;cursor:pointer;text-decoration:underline;padding:0}
+.pmReviewsSection{border-top:1.5px solid #e2e8f0;padding-top:20px;display:flex;flex-direction:column;gap:18px}
+.pmReviewsHeader{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px}
+.pmReviewsTitle{font-size:1.15rem;font-weight:800;color:#0f172a;margin:0}
+.pmRatingsBox{display:grid;grid-template-columns:120px 1fr;gap:20px;background:#f8fafc;border:1px solid #e2e8f0;border-radius:16px;padding:16px 20px;align-items:center}
+.pmScoreBig{font-size:2.4rem;font-weight:900;color:#0f172a;line-height:1}
+.pmStarsRow{color:#f59e0b;font-size:1.1rem;margin:4px 0}
+.pmTotalCount{font-size:.78rem;color:#64748b;font-weight:600}
+.pmBars{display:flex;flex-direction:column;gap:6px;flex:1}
+.pmBarRow{display:flex;align-items:center;gap:10px;font-size:.76rem;color:#475569}
+.pmBarTrack{flex:1;height:8px;background:#e2e8f0;border-radius:999px;overflow:hidden}
+.pmBarFill{height:100%;background:#f59e0b;border-radius:999px}
+.pmReviewList{display:flex;flex-direction:column;gap:12px}
+.pmReviewCard{background:#fff;border:1px solid #e2e8f0;border-radius:14px;padding:14px 16px;display:flex;flex-direction:column;gap:8px}
+.pmReviewTop{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px}
+.pmReviewAuthor{display:flex;align-items:center;gap:10px}
+.pmAuthorAvatar{width:32px;height:32px;border-radius:50%;background:#059669;color:#fff;font-weight:700;font-size:.78rem;display:flex;align-items:center;justify-content:center}
+.pmAuthorName{font-size:.88rem;font-weight:700;color:#0f172a}
+.pmAuthorLoc{font-size:.75rem;color:#64748b}
+.pmVerifiedBadge{display:inline-flex;align-items:center;gap:4px;font-size:.72rem;background:#ecfdf5;color:#047857;border:1px solid #a7f3d0;padding:2px 8px;border-radius:999px;font-weight:600}
+.pmReviewComment{font-size:.88rem;color:#334155;line-height:1.55;margin:0}
+.pmWriteReviewBox{background:#f8fafc;border:1.5px solid #cbd5e1;border-radius:16px;padding:18px;display:none;flex-direction:column;gap:12px}
+.pmWriteReviewBox.show{display:flex}
+.starPicker{display:flex;gap:6px;font-size:1.5rem;color:#cbd5e1;cursor:pointer;user-select:none}
+.starPicker .star{transition:color .15s}
+.starPicker .star.on{color:#f59e0b}
+@media(max-width:820px){.pmBody{grid-template-columns:1fr}.pmLeft{border-right:none;border-bottom:1px solid #eef2f0}.pmRatingsBox{grid-template-columns:1fr;gap:12px}}
+</style>
+</head>
+<body>
+
+<!-- TOP ANNOUNCEMENT & LOCALITY BAR -->
+<div class="topBar">
+  <div class="topBarInner">
+    <div class="locWrap">
+      <span>Delivering to:</span>
+      <button class="locBtn" onclick="openLocalityModal()" aria-label="Change delivery locality">
+        <svg class="svg-icon" viewBox="0 0 24 24"><path d="M20 10c0 4.993-5.539 10.193-7.399 11.799a1 1 0 0 1-1.202 0C9.539 20.193 4 14.993 4 10a8 8 0 0 1 16 0"/><circle cx="12" cy="10" r="3"/></svg>
+        <b id="activeLocalityName">Salt Lake Sector V (700091)</b> <small>▾</small>
+      </button>
+      <span class="etaPill">
+        <svg class="svg-icon" viewBox="0 0 24 24" style="fill:currentColor"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+        <span id="locEtaBadge">20-25 mins ETA</span>
+      </span>
+    </div>
+    <div class="topLinks">
+      <button onclick="scrollToSection('recipesSection')">
+        <svg class="svg-icon" viewBox="0 0 24 24"><path d="M18 2v6a3 3 0 0 1-3 3 3 3 0 0 1-3-3V2"/><path d="M14 2v20"/><path d="M18 20v-8"/><path d="M5 2v8a2 2 0 0 0 2 2h2a2 2 0 0 0 2-2V2"/><path d="M8 12v8"/></svg>
+        Recipe Kits
+      </button>
+      <button onclick="openBudgetModal()">
+        <svg class="svg-icon" viewBox="0 0 24 24"><path d="M19 7V4a1 1 0 0 0-1-1H5a2 2 0 0 0 0 4h15a1 1 0 0 1 1 1v4h-3a2 2 0 0 0 0 4h3a1 1 0 0 0 1-1v-2a1 1 0 0 0-1-1"/><path d="M3 5v14a2 2 0 0 0 2 2h15a1 1 0 0 0 1-1v-4"/></svg>
+        Budget Basket
+      </button>
+      <button onclick="openSubscriptionModal()">
+        <svg class="svg-icon" viewBox="0 0 24 24"><rect width="18" height="18" x="3" y="4" rx="2" ry="2"/><line x1="16" x2="16" y1="2" y2="6"/><line x1="8" x2="8" y1="2" y2="6"/><line x1="3" x2="21" y1="10" y2="10"/></svg>
+        Subscriptions
+      </button>
+      <button onclick="openTrackerModal()">
+        <svg class="svg-icon" viewBox="0 0 24 24"><path d="M14 18V6a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2v11a1 1 0 0 0 1 1h2"/><path d="M15 18H9"/><path d="M19 18h2a1 1 0 0 0 1-1v-3.65a1 1 0 0 0-.22-.62l-3.48-4.35A1 1 0 0 0 17.52 8H14"/><circle cx="17" cy="18" r="2"/><circle cx="7" cy="18" r="2"/></svg>
+        Track Order
+      </button>
+      <button onclick="openUserDashboard()">
+        <svg class="svg-icon" viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+        My Dashboard
+      </button>
+      <button class="adminLink" onclick="openAdminModal()">
+        <svg class="svg-icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+        Store Admin
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- REDESIGNED LUXURY LOGIN / SIGN UP MODAL -->
+<div id="authPage" class="authPage" role="dialog" aria-modal="true" aria-labelledby="authFormHeading">
+  <div class="authCard">
+    <!-- Visual Left Column -->
+    <div class="authVisual">
+      <div class="authVisualTop">
+        <div class="authVisualBrand">
+          <div class="authVisualLogo">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z"/><path d="M3 6h18"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
+            <span>FreshMart</span>
+          </div>
+          <span class="authVisualPantryTag">Kolkata Pantry</span>
+        </div>
+
+        <h1 class="authVisualTitle">Crisp farm groceries,<br>delivered in 30 mins.</h1>
+        <p class="authVisualDesc">Sign in to save your favorite recipe kits, access exclusive 5% recurring subscriber discounts, and track your fresh doorstep dispatch live.</p>
+
+        <div class="authLiveHubBadge">
+          <span class="authLivePulse"></span>
+          <span><strong>Active Dispatch Hubs:</strong> Salt Lake · Park Street · New Town · Ballygunge</span>
+        </div>
+
+        <div class="authVisualPerks">
+          <div class="authVisualPerkItem">
+            <span class="authVisualPerkIcon">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+            </span>
+            <span>100% farm-inspected fruits, vegetables & pure dairy</span>
+          </div>
+          <div class="authVisualPerkItem">
+            <span class="authVisualPerkIcon">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+            </span>
+            <span>Cash on Delivery & instant UPI verified payments</span>
+          </div>
+          <div class="authVisualPerkItem">
+            <span class="authVisualPerkIcon">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+            </span>
+            <span>Free express delivery across Kolkata on baskets over ₹199</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Verified Customer Quote Card -->
+      <div class="authSocialProof">
+        <div class="authProofHeader">
+          <span class="authProofStars">★★★★★</span>
+          <span class="authProofStat">42,000+ Kolkata households</span>
+        </div>
+        <p class="authProofQuote">"Everything from tender coconut to crisp Shimla apples arrived ice-cold and fresh right before my morning breakfast."</p>
+        <div class="authProofAuthor">
+          <div class="authProofAvatar">SC</div>
+          <div class="authProofMeta">
+            <b>Sneha C.</b>
+            <small>Salt Lake City, Sector 1</small>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Form Right Column -->
+    <div class="authFormPane">
+      <button class="authModalClose" onclick="closeAuth()" aria-label="Close authentication dialog">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
+
+      <!-- Segmented Mode Tabs -->
+      <div class="authTabs" role="tablist">
+        <button class="authTabBtn active" id="authTabSignin" role="tab" aria-selected="true" onclick="switchAuthTab('signin')">Sign In</button>
+        <button class="authTabBtn" id="authTabSignup" role="tab" aria-selected="false" onclick="switchAuthTab('signup')">Create Account</button>
+      </div>
+
+      <div style="margin-bottom: 14px;">
+        <h2 id="authFormHeading" style="font-size:1.4rem;font-weight:800;letter-spacing:-0.02em;margin:0 0 4px;color:#0f172a">Welcome to FreshMart</h2>
+        <p id="authFormSubtitle" style="font-size:0.86rem;color:#64748b;margin:0">Sign in with your account or test with 1-click demo access below.</p>
+      </div>
+
+      <!-- 1-Click Quick Demo Accounts (Zero friction) -->
+      <div class="authDemoBox">
+        <div class="authDemoHeader">
+          <span>⚡ Instant 1-Click Demo Accounts</span>
+          <span style="font-weight:normal;color:#059669;text-transform:none">Pre-configured</span>
+        </div>
+        <div class="authDemoGrid">
+          <button type="button" class="authDemoChip" onclick="quickDemoLogin('snehachattopadhyay18@gmail.com', 'password123')">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#059669" stroke-width="2.2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+            <div>
+              <b>Sneha C.</b>
+              <small>Salt Lake Resident</small>
+            </div>
+          </button>
+          <button type="button" class="authDemoChip" onclick="quickDemoLogin('rahul.roy@gmail.com', 'password123')">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#059669" stroke-width="2.2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+            <div>
+              <b>Rahul Roy</b>
+              <small>Jadavpur Resident</small>
+            </div>
+          </button>
+        </div>
+      </div>
+
+      <div class="authOrDivider">
+        <span>or enter details manually</span>
+      </div>
+
+      <!-- Dynamic Form Inputs -->
+      <div class="authInputGroup" id="authNameGroup" style="display:none;">
+        <label for="authName">Full Name</label>
+        <div class="authInputWrapper">
+          <span class="inputIcon">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+          </span>
+          <input type="text" id="authName" placeholder="e.g. Sneha Chattopadhyay" autocomplete="name">
+        </div>
+      </div>
+
+      <div class="authInputGroup">
+        <label for="authEmail">Email Address</label>
+        <div class="authInputWrapper">
+          <span class="inputIcon">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
+          </span>
+          <input type="email" id="authEmail" placeholder="yourname@gmail.com" autocomplete="email" required>
+        </div>
+      </div>
+
+      <div class="authInputGroup">
+        <label for="authPassword">Password</label>
+        <div class="authInputWrapper">
+          <span class="inputIcon">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+          </span>
+          <input type="password" id="authPassword" placeholder="Minimum 6 characters" autocomplete="current-password" required>
+          <button type="button" class="authTogglePwBtn" id="pwToggle" onclick="togglePw()" aria-label="Toggle password visibility">
+            <svg id="pwEyeIcon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+          </button>
+        </div>
+      </div>
+
+      <div class="authHelpersRow">
+        <label class="authRememberCheck">
+          <input type="checkbox" id="authRemember" checked>
+          <span>Remember me</span>
+        </label>
+        <a class="authHelpLink" onclick="showAuthHelp();return false;">Need demo password?</a>
+      </div>
+
+      <div id="authError" role="alert"></div>
+
+      <button class="authSubmitCTA" id="authSubmit" onclick="submitAuth()">
+        <span id="authSubmitText">Sign In to FreshMart</span>
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
+      </button>
+
+      <div class="authTrustNote">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#059669" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+        <span>256-Bit SSL Encrypted · 100% Safe & Secure Grocery Checkout</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- NAVBAR -->
+<nav class="nav">
+  <div class="logo">
+    <span class="logo-icon">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z"/><path d="M3 6h18"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
+    </span>
+    FreshMart
+  </div>
+  <div class="search">
+    <span class="search-ico">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+    </span>
+    <input type="search" id="searchBox" placeholder="Search apples, milk, paneer, rice…" aria-label="Search products">
+  </div>
+  <div class="navR">
+    <button class="userNavBtn" id="greetBox" onclick="openUserDashboard()" aria-label="Open My Account & Orders" hidden>
+      <span class="userNavAvatar" id="userAvatarText">SC</span>
+      <span class="userNavDetails">
+        <small>My Account</small>
+        <b id="userName">Sneha C.</b>
+      </span>
+      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
+    </button>
+    <button class="wishBtn" onclick="showWishlist()" aria-label="Open wishlist">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/></svg>
+      <span class="wishText">Wishlist</span>
+      <span class="wishBadge" id="wishCount">0</span>
+    </button>
+    <button class="cartBtn" onclick="showCart()" aria-label="Open cart">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z"/><path d="M3 6h18"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
+      ₹<span id="totalAmount">0</span>
+      <span class="badge" id="cartCount">0</span>
+    </button>
+    <button class="ghost" id="loginBtn" onclick="openAuth('signin')">Login</button>
+    <button class="ghost" id="logoutBtn" onclick="logout()" hidden>Logout</button>
+  </div>
+</nav>
+
+<!-- HERO (sliding banners) -->
+<header class="hero" id="hero" role="region" aria-roledescription="carousel" aria-label="Featured categories">
+  <div class="track" id="track">
+    <section class="slide s1 active" role="group" aria-roledescription="slide" aria-label="1 of 5">
+      <div class="txt">
+        <h1>Fresh groceries, delivered to your door</h1>
+        <p>Crisp fruits, organic vegetables, pure dairy, staples, and daily essentials. Delivered across Kolkata in 30-45 minutes.</p>
+        <a class="cta" href="#shop" onclick="goCat('all')">Shop now</a>
+      </div>
+      <div class="hero-card">
+        <img src="https://images.unsplash.com/photo-1542838132-92c53300491e?auto=format&fit=crop&w=700&q=80" alt="Fresh Groceries Showcase">
+        <div class="hero-card-overlay"></div>
+        <div class="hero-card-content">
+          <span class="hero-pill-badge"><span class="pulse-dot"></span> 25-Min Express Dispatch</span>
+          <b style="display:block;font-size:1.15rem">Morning Farm Harvest</b>
+          <small style="opacity:.9">Inspected for maximum freshness</small>
+        </div>
+      </div>
+    </section>
+    <section class="slide s2" role="group" aria-roledescription="slide" aria-label="2 of 5">
+      <div class="txt">
+        <h1>Juicy fruits for your basket</h1>
+        <p>Shimla apples, Robusta bananas, sweet Nagpur oranges, and seasonal mangoes ready to eat.</p>
+        <a class="cta" href="#shop" onclick="goCat('Fruits')">Shop fruits</a>
+      </div>
+      <div class="hero-card">
+        <img src="https://images.unsplash.com/photo-1619566636858-adf3ef46400b?auto=format&fit=crop&w=700&q=80" alt="Fresh Fruits">
+        <div class="hero-card-overlay"></div>
+        <div class="hero-card-content">
+          <span class="hero-pill-badge"><span class="pulse-dot"></span> Orchard Selected</span>
+          <b style="display:block;font-size:1.15rem">Shimla & Malda Harvest</b>
+          <small style="opacity:.9">Hand-picked daily</small>
+        </div>
+      </div>
+    </section>
+    <section class="slide s3" role="group" aria-roledescription="slide" aria-label="3 of 5">
+      <div class="txt">
+        <h1>Vegetables for every meal</h1>
+        <p>Farm-harvested tomatoes, Jyoti potatoes, Nashik onions, and fresh crunchy carrots.</p>
+        <a class="cta" href="#shop" onclick="goCat('Vegetables')">Shop vegetables</a>
+      </div>
+      <div class="hero-card">
+        <img src="https://images.unsplash.com/photo-1597362925123-77861d3fbac7?auto=format&fit=crop&w=700&q=80" alt="Farm Fresh Vegetables">
+        <div class="hero-card-overlay"></div>
+        <div class="hero-card-content">
+          <span class="hero-pill-badge"><span class="pulse-dot"></span> Local Farms</span>
+          <b style="display:block;font-size:1.15rem">Clean Country Veggies</b>
+          <small style="opacity:.9">Direct from Bengal growers</small>
+        </div>
+      </div>
+    </section>
+    <section class="slide s4" role="group" aria-roledescription="slide" aria-label="4 of 5">
+      <div class="txt">
+        <h1>Milk, butter & paneer for the morning</h1>
+        <p>Pure pasteurized cow milk, artisan malai paneer, and rich golden table butter.</p>
+        <a class="cta" href="#shop" onclick="goCat('Dairy')">Shop dairy</a>
+      </div>
+      <div class="hero-card">
+        <img src="https://images.unsplash.com/photo-1550583724-b2692b85b150?auto=format&fit=crop&w=700&q=80" alt="Pure Dairy Essentials">
+        <div class="hero-card-overlay"></div>
+        <div class="hero-card-content">
+          <span class="hero-pill-badge"><span class="pulse-dot"></span> Cold Chain Delivery</span>
+          <b style="display:block;font-size:1.15rem">Pasteurized Dairy</b>
+          <small style="opacity:.9">Pure milk & artisan malai paneer</small>
+        </div>
+      </div>
+    </section>
+    <section class="slide s5" role="group" aria-roledescription="slide" aria-label="5 of 5">
+      <div class="txt">
+        <h1>Snacks, bakery & drinks sorted</h1>
+        <p>Fresh sliced bread, Marie biscuits, crunchy potato crisps, and cold pressed juices.</p>
+        <a class="cta" href="#shop" onclick="goCat('Snacks')">Shop snacks</a>
+      </div>
+      <div class="hero-card">
+        <img src="https://images.unsplash.com/photo-1509440159596-0249088772ff?auto=format&fit=crop&w=700&q=80" alt="Bakery and Pantry">
+        <div class="hero-card-overlay"></div>
+        <div class="hero-card-content">
+          <span class="hero-pill-badge"><span class="pulse-dot"></span> Fresh Baked Daily</span>
+          <b style="display:block;font-size:1.15rem">Bakery & Tea Time</b>
+          <small style="opacity:.9">Sandwich breads, cakes & snacks</small>
+        </div>
+      </div>
+    </section>
+  </div>
+  <button class="hnav prev" id="prevBtn" aria-label="Previous slide">‹</button>
+  <button class="hnav next" id="nextBtn" aria-label="Next slide">›</button>
+  <div class="dots" id="dots"></div>
+</header>
+
+<!-- FRESH PICKS (auto-sliding marquee strip) -->
+<section class="picks" aria-label="Fresh picks">
+  <h2>Fresh picks</h2>
+  <p class="sub">Handpicked everyday favorites. Hover to pause, then add anything to your cart.</p>
+  <div class="marq"><div class="mtrack" id="mtrack"></div></div>
+</section>
+
+<!-- SHOP BY CATEGORY (Clean Vector Badges) -->
+<section class="category-section" aria-label="Shop by category">
+  <div class="section-head">
+    <h2>Shop by category</h2>
+    <p>Everything you need for your kitchen and home, neatly organised.</p>
+  </div>
+  <div class="category-grid">
+    <button class="category-card cat-fruit" onclick="goCat('Fruits')">
+      <div class="cat-badge">
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20.94c1.5 0 2.75 1.06 4 1.06 3 0 6-8 6-12.22A4.91 4.91 0 0 0 17 5c-2.22 0-4 1.44-5 2-1-.56-2.78-2-5-2a4.9 4.9 0 0 0-5 4.78C2 14 5 22 8 22c1.25 0 2.5-1.06 4-1.06Z"/><path d="M10 2c1 .5 2 2 2 5"/></svg>
+      </div>
+      <strong>Fresh Fruits</strong>
+      <small>Shimla apples & bananas</small>
+      <span class="arrow">→</span>
+    </button>
+    <button class="category-card cat-veg" onclick="goCat('Vegetables')">
+      <div class="cat-badge">
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.5 10-10 10Z"/><path d="M2 21c0-3 1.85-5.36 5.08-6C9.5 14.52 12 13 13 12"/></svg>
+      </div>
+      <strong>Vegetables</strong>
+      <small>Potatoes, onions, greens</small>
+      <span class="arrow">→</span>
+    </button>
+    <button class="category-card cat-dairy" onclick="goCat('Dairy')">
+      <div class="cat-badge">
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 2h8"/><path d="M9 2v3a3 3 0 0 1-.88 2.12L7 8.24A3 3 0 0 0 6 10.42V20a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2v-9.58a3 3 0 0 0-1-2.18l-1.12-1.12A3 3 0 0 1 15 5V2"/></svg>
+      </div>
+      <strong>Dairy Products</strong>
+      <small>Milk, paneer & butter</small>
+      <span class="arrow">→</span>
+    </button>
+    <button class="category-card cat-snack" onclick="goCat('Snacks')">
+      <div class="cat-badge">
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2a10 10 0 1 0 10 10 4 4 0 0 1-5-5 4 4 0 0 1-5-5Z"/><path d="M8.5 8.5v.01"/><path d="M16 15.5v.01"/><path d="M12 12v.01"/><path d="M11 17v.01"/><path d="M7 14v.01"/></svg>
+      </div>
+      <strong>Snacks & Bakery</strong>
+      <small>Bread, biscuits & chips</small>
+      <span class="arrow">→</span>
+    </button>
+    <button class="category-card cat-drink" onclick="goCat('Beverages')">
+      <div class="cat-badge">
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 8h1a4 4 0 1 1 0 8h-1"/><path d="M3 8h14v9a4 4 0 0 1-4 4H7a4 4 0 0 1-4-4Z"/><line x1="6" x2="6" y1="2" y2="4"/><line x1="10" x2="10" y1="2" y2="4"/><line x1="14" x2="14" y1="2" y2="4"/></svg>
+      </div>
+      <strong>Beverages</strong>
+      <small>Cold pressed juices</small>
+      <span class="arrow">→</span>
+    </button>
+  </div>
+</section>
+
+<!-- 1-CLICK RECIPE-TO-CART SECTION -->
+<section class="recipe-section" id="recipesSection" aria-label="Cook tonight recipes">
+  <div class="section-head">
+    <h2>Cook Tonight: 1-Click Recipe Kits</h2>
+    <p>Select a recipe and add all required fresh ingredients directly to your basket with one tap.</p>
+  </div>
+  <div class="recipe-grid" id="recipeGrid"></div>
+</section>
+
+<!-- OFFER BANNER -->
+<section class="offer-section" aria-label="Special offer">
+  <div class="offer">
+    <div class="offer-copy">
+      <div class="eyebrow">FreshMart Deal</div>
+      <h2>Fresh picks. Unbeatable prices.</h2>
+      <p>Save up to 20% on fresh fruits, dairy and everyday essentials with free home delivery on orders over ₹199.</p>
+    </div>
+    <div class="offer-badge"><b>₹50 OFF</b><span>Use code FRESH50</span></div>
+  </div>
+</section>
+
+<!-- PRODUCTS CATALOG -->
+<main class="shop" id="shop">
+  <div class="bar">
+    <div class="chips" id="chips"></div>
+    <select id="sortOption" aria-label="Sort products">
+      <option value="default">Sort by</option>
+      <option value="name">Name (A - Z)</option>
+      <option value="low">Price: Low to High</option>
+      <option value="high">Price: High to Low</option>
+    </select>
+  </div>
+  <div class="count" id="resultCount"></div>
+  <div id="productlist"></div>
+</main>
+
+<!-- PROFESSIONAL FOOTER -->
+<footer>
+  <div class="footer-grid">
+    <div class="footer-brand">
+      <b>FreshMart Grocery Store</b>
+      <p>Kolkata's trusted online grocery delivery service. Farm-fresh fruits, crisp vegetables, pure dairy, and household essentials delivered right to your doorstep.</p>
+    </div>
+    <div class="footer-col">
+      <h4>Shop Categories</h4>
+      <a href="#shop" onclick="goCat('all')">All Products</a>
+      <a href="#shop" onclick="goCat('Fruits')">Fresh Fruits</a>
+      <a href="#shop" onclick="goCat('Vegetables')">Vegetables</a>
+      <a href="#shop" onclick="goCat('Dairy')">Dairy Products</a>
+    </div>
+    <div class="footer-col">
+      <h4>Smart Features</h4>
+      <a href="#recipesSection">Recipe Kits</a>
+      <a href="#" onclick="openBudgetModal();return false;">Budget Basket</a>
+      <a href="#" onclick="openSubscriptionModal();return false;">Subscribe & Save</a>
+      <a href="#" onclick="openTrackerModal();return false;">Track Order Live</a>
+    </div>
+    <div class="footer-col">
+      <h4>Customer Promise</h4>
+      <a href="#" onclick="openLocalityModal();return false;">20-35 Mins Express Hubs</a>
+      <a href="#">Cash on Delivery</a>
+      <a href="#" onclick="openAdminModal();return false;">Store Manager Portal</a>
+      <a href="#">Help & Support (8 AM - 10 PM)</a>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2026 FreshMart Grocery Store. Kolkata, West Bengal. All rights reserved.</span>
+    <div class="footer-badges">
+      <span>100% Fresh Guarantee</span>
+      <span>Easy Return on Doorstep</span>
+      <span>Verified Hygiene</span>
+    </div>
+  </div>
+</footer>
+
+<!-- WISHLIST DRAWER -->
+<div id="wishlistOverlay" class="overlay" onclick="closeWishlist()"></div>
+<aside id="wishlistDrawer" class="wishlistDrawer" aria-label="Wishlist">
+  <div class="dHead">
+    <h2>My Wishlist</h2>
+    <button class="x" onclick="closeWishlist()" aria-label="Close wishlist">✕</button>
+  </div>
+  <div class="wishBody" id="wishlistItems"></div>
+</aside>
+
+<!-- CART DRAWER -->
+<div id="overlay" class="overlay" onclick="closeCart()"></div>
+<aside id="drawer" class="drawer" aria-label="Shopping cart">
+  <div class="dHead">
+    <h2>My Shopping Cart</h2>
+    <button class="x" onclick="closeCart()" aria-label="Close cart">✕</button>
+  </div>
+  <div class="dBody" id="cartItems"></div>
+  <div class="dFoot" id="dFoot">
+    <div class="row"><span>Total items</span><span id="drawerCount">0</span></div>
+    <div class="row"><span>Delivery fee</span><span style="color:var(--gd);font-weight:600">FREE on orders > ₹199</span></div>
+    <div class="row t"><span>Total Amount</span><span>₹<span id="cartTotal">0</span></span></div>
+    <button class="btn" onclick="showPayment()">Proceed to Checkout</button>
+  </div>
+</aside>
+
+<!-- DELIVERY ADDRESS MODAL -->
+<div id="addressModal" class="modal">
+  <div class="mBox">
+    <button class="x" onclick="closeAddress()" aria-label="Close">✕</button>
+    <h2>Delivery Address</h2>
+    <div class="amt">Where should we deliver your groceries?</div>
+    <div class="aForm">
+      <label for="addrName">Full name</label>
+      <input id="addrName" type="text" autocomplete="name" placeholder="e.g. Rahul Roy" maxlength="60">
+      
+      <label for="addrPhone">Mobile number</label>
+      <input id="addrPhone" type="tel" inputmode="numeric" autocomplete="tel" placeholder="10-digit mobile number" maxlength="15">
+      
+      <label for="addrLine">House / flat, street, area</label>
+      <textarea id="addrLine" rows="2" autocomplete="street-address" placeholder="Flat 4B, Greenfield Heights, Major Arterial Road" maxlength="200"></textarea>
+      
+      <label for="addrLandmark">Landmark <span>(optional)</span></label>
+      <input id="addrLandmark" type="text" placeholder="Near Karunamoyee Metro" maxlength="80">
+      
+      <div class="two">
+        <div>
+          <label for="addrCity">City</label>
+          <input id="addrCity" type="text" autocomplete="address-level2" value="Kolkata" maxlength="50">
+        </div>
+        <div>
+          <label for="addrPin">PIN code</label>
+          <input id="addrPin" type="text" inputmode="numeric" autocomplete="postal-code" placeholder="700091" maxlength="6">
+        </div>
+      </div>
+      
+      <div id="addrError" role="alert"></div>
+      <button class="btn" onclick="saveAddress()">Continue to Payment</button>
+    </div>
+  </div>
+</div>
+
+<!-- PAYMENT MODAL -->
+<div id="paymentModal" class="modal">
+  <div class="mBox">
+    <button class="x" onclick="closePayment()" aria-label="Close">✕</button>
+    <h2>Select Payment Method</h2>
+    <div class="amt">Amount to pay: ₹<span id="paymentTotal">0</span></div>
+    <div class="deliv">
+      <div id="delivTo"></div>
+      <button onclick="openAddress()">Change</button>
+    </div>
+    <button class="pay main" onclick="placeOrder()">
+      <div style="display:flex;align-items:center">
+        <div class="pay-icon-badge">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="20" height="12" x="2" y="6" rx="2"/><circle cx="12" cy="12" r="2"/></svg>
+        </div>
+        <div>
+          <b>Cash on Delivery</b><br>
+          <small>Pay with cash or UPI upon delivery</small>
+        </div>
+      </div>
+      <span style="font-weight:700;color:var(--gd)">Select →</span>
+    </button>
+    <button class="pay" onclick="otherPayment('UPI')">
+      <div style="display:flex;align-items:center">
+        <div class="pay-icon-badge">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="14" height="20" x="5" y="2" rx="2" ry="2"/><path d="M12 18h.01"/></svg>
+        </div>
+        <div>
+          <b>UPI (GPay, PhonePe, Paytm)</b><br>
+          <small>Instant contactless payment</small>
+        </div>
+      </div>
+      <span style="color:var(--mu)">Select →</span>
+    </button>
+    <button class="pay" onclick="otherPayment('Credit / Debit Card')">
+      <div style="display:flex;align-items:center">
+        <div class="pay-icon-badge">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="20" height="14" x="2" y="5" rx="2"/><line x1="2" x2="22" y1="10" y2="10"/></svg>
+        </div>
+        <div>
+          <b>Credit / Debit Card</b><br>
+          <small>Visa, Mastercard, RuPay</small>
+        </div>
+      </div>
+      <span style="color:var(--mu)">Select →</span>
+    </button>
+    <button class="pay" onclick="otherPayment('Net Banking')">
+      <div style="display:flex;align-items:center">
+        <div class="pay-icon-badge">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m2 7 10-5 10 5"/><path d="M12 2v20"/><path d="M4 10v9"/><path d="M8 10v9"/><path d="M16 10v9"/><path d="M20 10v9"/><path d="M2 19h20"/><path d="M2 22h20"/></svg>
+        </div>
+        <div>
+          <b>Net Banking</b><br>
+          <small>All Indian banks</small>
+        </div>
+      </div>
+      <span style="color:var(--mu)">Select →</span>
+    </button>
+  </div>
+</div>
+
+<!-- ORDER SUCCESS MODAL -->
+<div id="successModal" class="modal">
+  <div class="mBox done">
+    <div class="ok">✓</div>
+    <h2>Order Placed Successfully!</h2>
+    <p style="color:var(--mu);margin:0 0 16px">Your groceries will be delivered within 30-45 minutes. Keep payment ready on delivery.</p>
+    <div class="row"><span>Order ID</span><b id="sId"></b></div>
+    <div class="row"><span>Items</span><b id="sItems"></b></div>
+    <div class="row"><span>Payment</span><b>Cash on Delivery</b></div>
+    <div class="row"><span>Deliver to</span><b id="sAddr" style="text-align:right;max-width:65%"></b></div>
+    <div class="row t"><span>Pay on Delivery</span><span id="sTotal"></span></div>
+    <div style="display:flex;gap:10px;margin-top:14px">
+      <button class="btn" style="background:var(--ac)" onclick="openTrackerModal();closeSuccess();">Track Order Live</button>
+      <button class="btn" onclick="closeSuccess()">Continue Shopping</button>
+    </div>
+  </div>
+</div>
+
+<!-- LOCALITY SELECTOR MODAL -->
+<div id="localityModal" class="modal">
+  <div class="mBox">
+    <button class="x" onclick="closeLocalityModal()" aria-label="Close">✕</button>
+    <h2>Delivery Locality</h2>
+    <div class="amt">Select your Kolkata area for live express dispatch:</div>
+    <div class="locGrid" id="localityList"></div>
+  </div>
+</div>
+
+<!-- BUDGET BASKET BUILDER MODAL -->
+<div id="budgetModal" class="modal">
+  <div class="mBox">
+    <button class="x" onclick="closeBudgetModal()" aria-label="Close">✕</button>
+    <h2>Budget Basket Builder</h2>
+    <p style="color:var(--mu);font-size:.88rem;margin:0 0 12px">Tell us your budget, and we'll assemble the best fresh basket for you:</p>
+    <div class="budgetPresets">
+      <button class="budgetPresetBtn on" onclick="setBudget(150)">₹150</button>
+      <button class="budgetPresetBtn" onclick="setBudget(250)">₹250</button>
+      <button class="budgetPresetBtn" onclick="setBudget(350)">₹350</button>
+      <button class="budgetPresetBtn" onclick="setBudget(500)">₹500</button>
+    </div>
+    <div id="budgetBasketContent">
+      <div class="budgetItemsList" id="budgetItemsList"></div>
+      <div class="budgetSummary">
+        <span>Basket Total:</span>
+        <span id="budgetTotal" style="color:var(--gd)">₹0</span>
+      </div>
+    </div>
+    <button class="btn" id="addBudgetBtn" onclick="addBudgetBasketToCart()">Add Entire Basket to Cart</button>
+  </div>
+</div>
+
+<!-- SUBSCRIBE & SAVE MODAL -->
+<div id="subscriptionModal" class="modal">
+  <div class="mBox">
+    <button class="x" onclick="closeSubscriptionModal()" aria-label="Close">✕</button>
+    <h2>Subscribe & Save 5%</h2>
+    <p style="color:var(--mu);font-size:.88rem;margin:0 0 14px">Automate your daily essentials so you never run out of milk or bread.</p>
+    <div class="aForm">
+      <label for="subProduct">Select Product</label>
+      <select id="subProduct">
+        <option value="prod-milk">Farm Fresh Toned Milk (1 Litre) - ₹57 (was ₹60)</option>
+        <option value="prod-bread">White Sandwich Bread (400g) - ₹38 (was ₹40)</option>
+        <option value="prod-curd">Artisanal Thick Dahi (400g) - ₹33 (was ₹35)</option>
+        <option value="prod-banana">Robusta Bananas (1 Dozen) - ₹57 (was ₹60)</option>
+        <option value="prod-butter">Salted Table Butter (100g) - ₹52 (was ₹55)</option>
+      </select>
+      
+      <label for="subFreq">Delivery Frequency</label>
+      <select id="subFreq">
+        <option value="Daily">Daily Morning (Everyday)</option>
+        <option value="Alternate Days">Alternate Days</option>
+        <option value="Every Weekend">Every Weekend (Saturday & Sunday)</option>
+      </select>
+
+      <label for="subTime">Preferred Morning Time</label>
+      <select id="subTime">
+        <option value="6:30 AM - 7:30 AM">Early Morning (6:30 AM - 7:30 AM)</option>
+        <option value="7:30 AM - 8:30 AM">Breakfast Time (7:30 AM - 8:30 AM)</option>
+      </select>
+      
+      <button class="btn" style="margin-top:16px" onclick="createSubscription()">Activate Subscription (5% Off)</button>
+    </div>
+    <div style="margin-top:20px;border-top:1px solid var(--ln);padding-top:14px">
+      <h3 style="font-size:.95rem;margin:0 0 8px">Your Active Subscriptions:</h3>
+      <div id="subList" style="font-size:.86rem;color:var(--mu)">Loading subscriptions…</div>
+    </div>
+  </div>
+</div>
+
+<!-- LIVE ORDER TRACKER MODAL -->
+<div id="trackerModal" class="modal">
+  <div class="mBox">
+    <button class="x" onclick="closeTrackerModal()" aria-label="Close">✕</button>
+    <h2>Live Order Tracker</h2>
+    <div class="trackOrderHeader">
+      <div style="font-size:.85rem;color:var(--mu)">Order Number</div>
+      <b style="font-size:1.2rem;color:var(--gd)" id="trOrderId">FM-KOL-8921</b>
+      <div style="font-size:.85rem;margin-top:4px;color:var(--ac);font-weight:700">Estimated arrival in 18 minutes</div>
+    </div>
+    
+    <div class="timeline" id="trTimeline">
+      <div class="tStep on">
+        <span class="tDot">✓</span>
+        <b>Order Received & Confirmed</b>
+        <small>Payment: Cash on Delivery</small>
+      </div>
+      <div class="tStep on">
+        <span class="tDot">✓</span>
+        <b>Packed at Salt Lake Central Hub</b>
+        <small>Freshness & quality inspection complete</small>
+      </div>
+      <div class="tStep on">
+        <span class="tDot"><svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor" stroke="none"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg></span>
+        <b>Out for Delivery (Rider en route)</b>
+        <small>Cruising along Major Arterial Road</small>
+      </div>
+      <div class="tStep">
+        <span class="tDot">4</span>
+        <b>Delivered to Doorstep</b>
+        <small>Collect fresh package and pay rider</small>
+      </div>
+    </div>
+
+    <div class="riderCard">
+      <div class="riderAvatar">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 18V6a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2v11a1 1 0 0 0 1 1h2"/><path d="M15 18H9"/><path d="M19 18h2a1 1 0 0 0 1-1v-3.65a1 1 0 0 0-.22-.62l-3.48-4.35A1 1 0 0 0 17.52 8H14"/><circle cx="17" cy="18" r="2"/><circle cx="7" cy="18" r="2"/></svg>
+      </div>
+      <div style="flex:1">
+        <b style="display:block;font-size:.95rem">Subrata Das</b>
+        <small style="color:var(--mu)">Ather 450X Electric (WB-02-AK-9812)</small>
+        <div style="font-size:.78rem;color:#d78b00;font-weight:700">★ 4.9 (1,240 deliveries)</div>
+      </div>
+      <a href="tel:+919831099881" style="background:var(--gs);color:var(--gd);border-radius:999px;padding:8px 14px;text-decoration:none;font-size:.82rem;font-weight:700">Call</a>
+    </div>
+  </div>
+</div>
+
+<!-- STORE MANAGER / ADMIN PORTAL MODAL -->
+<div id="adminModal" class="modal">
+  <div class="mBox wide">
+    <button class="x" onclick="closeAdminModal()" aria-label="Close">✕</button>
+    <h2>Store Manager Admin Suite</h2>
+    <p style="color:var(--mu);font-size:.88rem;margin:0 0 14px">Control real-time orders, manage live grocery stock & pricing, view recurring subscriptions, and monitor store operations.</p>
+    
+    <div class="adminStats">
+      <div class="adminStat">
+        <small>TOTAL REVENUE</small>
+        <b id="admRev">₹0</b>
+      </div>
+      <div class="adminStat">
+        <small>TOTAL ORDERS</small>
+        <b id="admOrders">0</b>
+      </div>
+      <div class="adminStat">
+        <small>ACTIVE DELIVERIES</small>
+        <b id="admActive" style="color:var(--ac)">0</b>
+      </div>
+      <div class="adminStat">
+        <small>IN-STOCK ITEMS</small>
+        <b id="admStock" style="color:var(--g)">0</b>
+      </div>
+    </div>
+
+    <!-- ADMIN TABS -->
+    <div class="adminTabs">
+      <button class="adminTabBtn on" onclick="switchAdminTab('ordersTab')">Live Orders & Dispatch</button>
+      <button class="adminTabBtn" onclick="switchAdminTab('productsTab')">Product Catalog & Stock</button>
+      <button class="adminTabBtn" onclick="switchAdminTab('subsTab')">Customer Subscriptions</button>
+      <button class="adminTabBtn" onclick="switchAdminTab('storeTab')">Store Operations</button>
+    </div>
+
+    <!-- TAB 1: LIVE ORDERS & DISPATCH -->
+    <div id="ordersTab" class="adminTabContent active">
+      <div class="adminSearchRow">
+        <input type="text" id="admOrderSearch" class="adminInput" placeholder="Search by customer name, order ID, phone…" oninput="filterAdminOrders()">
+        <select id="admOrderStatusFilter" class="adminInput" style="max-width:180px" onchange="filterAdminOrders()">
+          <option value="all">All Statuses</option>
+          <option value="Order Confirmed">Order Confirmed</option>
+          <option value="Preparing">Packing at Hub</option>
+          <option value="Out for Delivery">Out for Delivery</option>
+          <option value="Delivered">Delivered</option>
+        </select>
+        <button class="adminBtn sec" onclick="loadAdminDashboard()">Refresh</button>
+      </div>
+
+      <div style="overflow-x:auto">
+        <table class="adminTable">
+          <thead>
+            <tr>
+              <th>Order ID</th>
+              <th>Customer & Area</th>
+              <th>Items & Value</th>
+              <th>Status</th>
+              <th>Update Status</th>
+            </tr>
+          </thead>
+          <tbody id="admOrdersBody">
+            <tr><td colspan="5" style="text-align:center">Loading live orders…</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- TAB 2: PRODUCT CATALOG & STOCK CONTROL -->
+    <div id="productsTab" class="adminTabContent">
+      <div class="adminSearchRow">
+        <input type="text" id="admProdSearch" class="adminInput" placeholder="Search product name, category…" oninput="filterAdminProducts()">
+        <button class="adminBtn" onclick="toggleNewProdForm()">+ Add New Product</button>
+      </div>
+
+      <!-- Add Product Form -->
+      <div id="newProdForm" class="adminNewProdForm">
+        <h4 style="margin:0 0 10px;color:var(--gd)">Add New Grocery Item</h4>
+        <div class="adminFormGrid">
+          <input type="text" id="npName" class="adminInput" placeholder="Product Name (e.g. Green Capsicum)">
+          <select id="npCategory" class="adminInput">
+            <option value="Fruits">Fresh Fruits</option>
+            <option value="Vegetables">Vegetables</option>
+            <option value="Dairy">Dairy Products</option>
+            <option value="Snacks">Snacks & Bakery</option>
+            <option value="Beverages">Beverages</option>
+            <option value="Staples">Rice & Pulses</option>
+            <option value="Household">Household Essentials</option>
+          </select>
+          <input type="number" id="npPrice" class="adminInput" placeholder="Selling Price (₹)">
+          <input type="text" id="npUnit" class="adminInput" placeholder="Unit (e.g. 500 g, 1 kg, 1 pack)">
+          <input type="text" id="npImage" class="adminInput" placeholder="Image URL (Unsplash or direct image link)">
+          <input type="text" id="npDesc" class="adminInput" placeholder="Brief description">
+        </div>
+        <div style="display:flex;gap:8px;margin-top:12px">
+          <button class="adminBtn" onclick="submitNewProduct()">Save Product to Store</button>
+          <button class="adminBtn sec" onclick="toggleNewProdForm()">Cancel</button>
+        </div>
+      </div>
+
+      <div style="overflow-x:auto">
+        <table class="adminTable">
+          <thead>
+            <tr>
+              <th>Item</th>
+              <th>Category</th>
+              <th>Price (₹)</th>
+              <th>Availability</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody id="admProductsBody">
+            <tr><td colspan="5" style="text-align:center">Loading products…</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- TAB 3: CUSTOMER SUBSCRIPTIONS -->
+    <div id="subsTab" class="adminTabContent">
+      <h4 style="margin:0 0 8px;font-size:.95rem">Active Milk & Breakfast Daily Deliveries</h4>
+      <div style="overflow-x:auto">
+        <table class="adminTable">
+          <thead>
+            <tr>
+              <th>Subscription ID</th>
+              <th>Customer</th>
+              <th>Product</th>
+              <th>Frequency & Slot</th>
+              <th>Price</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody id="admSubsBody">
+            <tr><td colspan="6" style="text-align:center">Loading subscriptions…</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- TAB 4: STORE OPERATIONS -->
+    <div id="storeTab" class="adminTabContent">
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:16px">
+        <div style="background:var(--bg);border:1px solid var(--ln);border-radius:14px;padding:14px">
+          <h4 style="margin:0 0 6px">Store Status</h4>
+          <p style="margin:0;font-size:.85rem;color:var(--mu)">Operating Hours: <b>8:00 AM – 10:00 PM IST</b></p>
+          <div style="margin-top:8px"><span class="stockBadge in">● Online & Receiving Orders</span></div>
+        </div>
+        <div style="background:var(--bg);border:1px solid var(--ln);border-radius:14px;padding:14px">
+          <h4 style="margin:0 0 6px">Delivery Logistics</h4>
+          <p style="margin:0;font-size:.85rem;color:var(--mu)">Express Dispatch Hub: <b>Salt Lake Sector V</b></p>
+          <div style="margin-top:8px"><span class="stockBadge in">● All 8 Kolkata Hubs Active</span></div>
+        </div>
+      </div>
+      <div style="background:var(--gs);border-radius:14px;padding:14px;border:1px solid #c8e6d2">
+        <b style="color:var(--gd)">Demo Quick Action:</b>
+        <p style="font-size:.85rem;margin:4px 0 10px;color:var(--tx)">Need to demonstrate a new order arriving live to your professor or examiner?</p>
+        <button class="adminBtn" onclick="createDemoOrderForAdmin()">Create Live Test Order (₹340)</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- PRODUCT DETAILS & REVIEWS MODAL -->
+<div id="productModal" class="productModal" role="dialog" aria-modal="true" aria-labelledby="pmModalHeading">
+  <div class="productModalCard">
+    <button class="authModalClose" onclick="closeProductModal()" aria-label="Close product details">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+    </button>
+    <div class="pmBody" id="pmModalContent">
+      <div style="padding:40px;text-align:center;grid-column:1/-1;color:#64748b">Loading product details & reviews…</div>
+    </div>
+  </div>
+</div>
+
+<!-- USER DASHBOARD MODAL -->
+<div id="dashboardModal" class="dashboardModal" role="dialog" aria-modal="true" aria-labelledby="dashUserTitle">
+  <div class="dashboardCard">
+    <button class="authModalClose" onclick="closeUserDashboard()" aria-label="Close dashboard">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+    </button>
+
+    <!-- Hero Header with User Identity and Stats -->
+    <div class="dashboardHero">
+      <div class="dashUserHeader">
+        <div class="dashUserIdentity">
+          <div class="dashAvatarBig" id="dashAvatar">SC</div>
+          <div class="dashUserMeta">
+            <h3 id="dashUserTitle">Sneha Chattopadhyay</h3>
+            <p id="dashUserEmail">snehachattopadhyay18@gmail.com · <span id="dashUserPhone">9830887766</span></p>
+          </div>
+        </div>
+        <div style="display:flex;align-items:center;gap:10px">
+          <span class="dashMemberBadge" id="dashMemberTier">★ Gold Shopper · Express Hub</span>
+          <button class="dashBtn secondary" style="background:rgba(255,255,255,0.18);border:1px solid rgba(255,255,255,0.3);color:#fff" onclick="logout()">Logout</button>
+        </div>
+      </div>
+
+      <!-- Quick Metrics Grid -->
+      <div class="dashStatsGrid">
+        <div class="dashStatBox">
+          <small>Total Orders</small>
+          <b id="dashStatOrders">0</b>
+        </div>
+        <div class="dashStatBox">
+          <small>Lifetime Spent</small>
+          <b id="dashStatSpent">₹0</b>
+        </div>
+        <div class="dashStatBox">
+          <small>Fresh Savings</small>
+          <b id="dashStatSaved" style="color:#bbf7d0">₹0</b>
+        </div>
+        <div class="dashStatBox">
+          <small>Active Subs</small>
+          <b id="dashStatSubs">0</b>
+        </div>
+      </div>
+    </div>
+
+    <!-- Navigation Tabs -->
+    <div class="dashTabsBar" role="tablist">
+      <button class="dashTabBtn active" id="dashTabOrdersBtn" onclick="switchDashboardTab('orders')">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z"/><path d="M3 6h18"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
+        Order History & Receipts
+      </button>
+      <button class="dashTabBtn" id="dashTabProfileBtn" onclick="switchDashboardTab('profile')">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+        Profile & Delivery Address
+      </button>
+      <button class="dashTabBtn" id="dashTabSubsBtn" onclick="switchDashboardTab('subs')">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="18" height="18" x="3" y="4" rx="2" ry="2"/><line x1="16" x2="16" y1="2" y2="6"/><line x1="8" x2="8" y1="2" y2="6"/><line x1="3" x2="21" y1="10" y2="10"/></svg>
+        Recurring Subscriptions (5% Off)
+      </button>
+    </div>
+
+    <!-- Tab Contents -->
+    <div class="dashBody">
+      <!-- 1. Orders Tab -->
+      <div id="dashTabOrders" class="dashTabPane active">
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px">
+          <b style="font-size:1.05rem;color:#0f172a">Your Grocery Orders</b>
+          <span style="font-size:.82rem;color:#64748b" id="dashOrdersCountBadge">Showing recent orders</span>
+        </div>
+        <div id="dashOrdersList">
+          <div style="text-align:center;padding:32px;color:#64748b">Loading your orders…</div>
+        </div>
+      </div>
+
+      <!-- 2. Profile & Address Tab -->
+      <div id="dashTabProfile" class="dashTabPane">
+        <div style="margin-bottom:16px">
+          <b style="font-size:1.05rem;color:#0f172a">Account & Default Delivery Address</b>
+          <p style="font-size:.84rem;color:#64748b;margin:3px 0 0">Updates are synced to express doorstep delivery across Kolkata.</p>
+        </div>
+        <form class="dashProfileForm" onsubmit="saveUserProfile(event)">
+          <div>
+            <label style="display:block;font-size:.8rem;font-weight:600;color:#334155;margin-bottom:6px">Recipient Full Name</label>
+            <input type="text" id="profFullName" style="width:100%;padding:10px 14px;border:1.5px solid #cbd5e1;border-radius:10px;font:inherit" required>
+          </div>
+          <div>
+            <label style="display:block;font-size:.8rem;font-weight:600;color:#334155;margin-bottom:6px">Phone Number (for Rider OTP)</label>
+            <input type="tel" id="profPhone" style="width:100%;padding:10px 14px;border:1.5px solid #cbd5e1;border-radius:10px;font:inherit" required>
+          </div>
+          <div class="dashFormSpan2">
+            <label style="display:block;font-size:.8rem;font-weight:600;color:#334155;margin-bottom:6px">Delivery Address (Flat / House, Building, Street)</label>
+            <input type="text" id="profAddress" style="width:100%;padding:10px 14px;border:1.5px solid #cbd5e1;border-radius:10px;font:inherit" placeholder="e.g. Block CD, Sector 1" required>
+          </div>
+          <div>
+            <label style="display:block;font-size:.8rem;font-weight:600;color:#334155;margin-bottom:6px">Prominent Landmark</label>
+            <input type="text" id="profLandmark" style="width:100%;padding:10px 14px;border:1.5px solid #cbd5e1;border-radius:10px;font:inherit" placeholder="e.g. Near City Centre 1">
+          </div>
+          <div>
+            <label style="display:block;font-size:.8rem;font-weight:600;color:#334155;margin-bottom:6px">PIN Code (Kolkata)</label>
+            <input type="text" id="profPin" style="width:100%;padding:10px 14px;border:1.5px solid #cbd5e1;border-radius:10px;font:inherit" placeholder="700064" required>
+          </div>
+          <div class="dashFormSpan2" style="display:flex;justify-content:flex-end;gap:10px;margin-top:8px">
+            <button type="submit" class="dashBtn primary" id="profSaveBtn" style="padding:10px 24px">Save Delivery Profile</button>
+          </div>
+        </form>
+      </div>
+
+      <!-- 3. Subscriptions Tab -->
+      <div id="dashTabSubs" class="dashTabPane">
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px">
+          <div>
+            <b style="font-size:1.05rem;color:#0f172a">Active Subscriptions</b>
+            <p style="font-size:.84rem;color:#64748b;margin:3px 0 0">Save 5% automatically on milk, bread, and breakfast items.</p>
+          </div>
+          <button class="dashBtn primary" onclick="closeUserDashboard();openSubscriptionModal()">+ Add New Subscription</button>
+        </div>
+        <div id="dashSubsList">
+          <div style="text-align:center;padding:32px;color:#64748b">Loading subscriptions…</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ITEMISED INVOICE / RECEIPT MODAL -->
+<div id="receiptModal" class="receiptModal" role="dialog" aria-modal="true" aria-labelledby="rcOrderId">
+  <div class="receiptPaper">
+    <button class="authModalClose" style="top:12px;right:12px" onclick="closeReceiptModal()" aria-label="Close invoice">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+    </button>
+    <div class="receiptHeader">
+      <div class="receiptBrand">FreshMart Grocery</div>
+      <small style="color:#64748b;display:block;margin-top:2px">Kolkata Central Hub · Tax Invoice / Delivery Memo</small>
+      <div style="font-size:.9rem;font-weight:700;margin-top:8px;color:#0f172a" id="rcOrderId">Order #FM-KOL-9104</div>
+      <small style="color:#64748b" id="rcOrderDate">March 5, 2026 · 10:45 AM</small>
+    </div>
+
+    <div style="font-size:.82rem;margin-bottom:12px;color:#334155;background:#f8fafc;padding:10px 12px;border-radius:10px">
+      <div><strong>Customer:</strong> <span id="rcCustomerName">Sneha Chattopadhyay</span></div>
+      <div><strong>Delivery Address:</strong> <span id="rcAddress">Block CD, Sector 1, Salt Lake City, 700064</span></div>
+      <div><strong>Payment:</strong> <span id="rcPaymentMethod">Cash on Delivery</span></div>
+    </div>
+
+    <table class="receiptTable">
+      <thead>
+        <tr>
+          <th>Item</th>
+          <th style="text-align:center">Qty</th>
+          <th style="text-align:right">Price</th>
+        </tr>
+      </thead>
+      <tbody id="rcItemsBody">
+        <tr><td colspan="3">Loading items…</td></tr>
+      </tbody>
+    </table>
+
+    <div style="border-top:1.5px solid #e2e8f0;padding-top:10px;font-size:.85rem">
+      <div style="display:flex;justify-content:space-between;margin-bottom:4px;color:#64748b">
+        <span>Items Subtotal:</span>
+        <span id="rcSubtotal">₹410</span>
+      </div>
+      <div style="display:flex;justify-content:space-between;margin-bottom:4px;color:#64748b">
+        <span>Express Delivery Fee:</span>
+        <span id="rcDeliveryFee" style="color:#059669;font-weight:700">FREE</span>
+      </div>
+      <div style="display:flex;justify-content:space-between;margin-top:8px;padding-top:8px;border-top:2px solid #0f172a;font-size:1.05rem;font-weight:800;color:#0f172a">
+        <span>Total Paid / Payable:</span>
+        <span id="rcGrandTotal">₹410</span>
+      </div>
+    </div>
+
+    <div style="display:flex;gap:10px;margin-top:20px">
+      <button class="dashBtn primary" style="flex:1;justify-content:center" onclick="window.print()">Print Receipt</button>
+      <button class="dashBtn secondary" style="flex:1;justify-content:center" onclick="closeReceiptModal()">Close</button>
+    </div>
+  </div>
+</div>
+
+<!-- TOAST CONTAINER -->
+<div id="toasts" aria-live="polite"></div>
+
+<!-- Confetti Canvas Library -->
+<script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.4/dist/confetti.browser.min.js"></script>
+<!-- Live Backend API and Frontend Controller Scripts -->
+<script src="/api.js"></script>
+<script src="/app.js"></script>
+</body>
+</html>

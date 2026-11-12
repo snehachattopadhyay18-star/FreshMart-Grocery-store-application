@@ -1,0 +1,6 @@
+{
+  "name": "FreshMart - Online Grocery Store",
+  "description": "Your Daily Needs, Delivered Fresh! Online grocery shopping web application for fresh fruits, vegetables, dairy, pulses, and household essentials in Kolkata.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
